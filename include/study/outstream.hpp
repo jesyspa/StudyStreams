@@ -23,8 +23,16 @@ class OutStream :
 	~OutStream();
 
 	// Custom functions
+	//! \brief Associate the stream with a certain lesson.
 	void set_lesson(Lesson& lesson);
+
+	//! \brief Return true if stream is associated with a lesson.
 	bool has_lesson() const;
+
+	//! \brief Return a reference to the lesson.
+	//!
+	//! If there is no lesson associated, the behaviour of this function is
+	//! undefined.
 	Lesson& get_lesson();
 
 	// Standard formatted output
@@ -42,17 +50,7 @@ class OutStream :
 	Lesson* lesson_;
 };
 
-template<typename T>
-inline OutStream& OutStream::operator<<(T const& value)
-{
-	return *this;
-}
-
-template<>
-inline OutStream& OutStream::operator<<<EndLine>(EndLine const& value)
-{
-	return *this;
-}
-
 } // namespace study
+
 #endif // INCLUDE_STUDY_OUTSTREAM_HPP
+

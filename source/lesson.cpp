@@ -3,11 +3,17 @@
 namespace study
 {
 
-Lesson::Lesson(std::string const&, InStream&, OutStream&) {}
-
-int Lesson::result() const
+Lesson::Lesson(
+	std::string const& title,
+	InStream& ins,
+	LogStream& logs,
+	OutStream& outs)
 {
-	return -150493;
+}
+
+Lesson::State Lesson::result() const
+{
+	return State::error | State::noinput;
 }
 
 } // namespace study

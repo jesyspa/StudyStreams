@@ -1,3 +1,5 @@
+#include <fstream>
+#include <iostream>
 #include "study/io.hpp"
 
 namespace study
@@ -5,7 +7,9 @@ namespace study
 
 OutStream cout;
 InStream cin;
-//ErrStream cerr;
+LogStream cerr(std::cerr);
+LogStream clog;
+LogStream lout(std::cout);
 EndLine endl;
 
 } // namespace study

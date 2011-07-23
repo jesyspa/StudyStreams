@@ -3,14 +3,16 @@
 
 #include "outstream.hpp"
 #include "instream.hpp"
-#include "errstream.hpp"
+#include "logstream.hpp"
 
 namespace study
 {
 
 extern OutStream cout;
 extern InStream cin;
-//extern ErrStream cerr;
+extern LogStream cerr;
+extern LogStream clog;
+extern LogStream lout;
 extern EndLine endl;
 
 } // namespace study

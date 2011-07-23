@@ -44,3 +44,4 @@ inline InStream& InStream::operator>>(T& value)
 } // namespace study
 
 #endif // INCLUDE_STUDY_INSTREAM_HPP
+

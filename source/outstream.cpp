@@ -19,6 +19,18 @@ Lesson& OutStream::get_lesson()
 	return *this->lesson_;
 }
 
+template<typename T>
+OutStream& OutStream::operator<<(T const& value)
+{
+	return *this;
+}
+
+template<>
+OutStream& OutStream::operator<<<EndLine>(EndLine const& value)
+{
+	return *this;
+}
+
 OutStream& OutStream::put(char ch)
 {
 	return *this;
