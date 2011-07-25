@@ -1,0 +1,9 @@
+Import('base_env')
+Import('flags')
+
+test_sources = Glob("*_test.cpp") + ["test_main.cpp"]
+
+test_env = base_env.Clone()
+test_env.MergeFlags([flags['debug'], flags['test']])
+test_env.Program("#runtests", test_sources)
+

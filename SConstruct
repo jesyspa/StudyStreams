@@ -28,5 +28,5 @@ Export('base_env')
 SConscript("source/SConscriptDebug", variant_dir='dbgbuild')
 SConscript("source/SConscriptRelease", variant_dir='relbuild')
 
-Default('test')
+Default('runtests')
 
