@@ -1,6 +1,6 @@
 *.swp
 *.o
-build/
+*build/
 *.a
 doc/
 .scons*

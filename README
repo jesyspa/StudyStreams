@@ -1,1 +1,13 @@
-An interactive way to learn C++.
+A semi-interactive way to learn C++, making use of streams.
+
+In order to start, run:
+	scons lib/libstudy.a
+
+After that, choose a lesson, edit the main.cpp file accordingly, and then
+compile and link main.cpp, loader.cpp, and lib/libstudy.a .
+
+To build with debug information, run:
+	scons lib/libdbgstudy.a
+
+After that, link to lib/libdbgstudy.a .
+

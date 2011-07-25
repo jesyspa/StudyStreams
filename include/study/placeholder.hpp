@@ -17,30 +17,37 @@ inline R replace_with_a_()
 	return R();
 }
 
+//! \brief Specialisation for char.
 template<>
 inline char replace_with_a_<char>()
 {
 	return '?';
 }
 
+//! \brief Specialisation for int.
 template<>
 inline int replace_with_a_<int>()
 {
 	return 314159;
 }
 
+//! \brief Specialisation for std::string.
+//!
+//! Not strictly necessary, but may be clearer than char const* in some cases.
 template<>
 inline std::string replace_with_a_<std::string>()
 {
 	return "<Placeholder std::string>";
 }
 
+//! \brief Specialisation for char const*.
 template<>
 inline char const* replace_with_a_<char const*>()
 {
 	return "<Placeholder const char*>";
 }
 
+//! \brief Specialisation for double.
 template<>
 inline double replace_with_a_<double>()
 {

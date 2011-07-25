@@ -78,10 +78,15 @@ class LogStream :
 	LogStream& operator<<(EndLine const& value);
 	
 	// Standard unformatted output
+	//! \brief Wraps std::ostream::put(char).
 	LogStream& put(char ch);
+	//! \brief Wraps std::ostream::write(char const*, size_t).
 	LogStream& write(char const* s, size_t count);
 
 	// Misc standard
+	//! \brief Causes the stream to be flushed.
+	//!
+	//! A newline is added anyway (to do otherwise makes no sense).
 	LogStream& flush();
 
   private:

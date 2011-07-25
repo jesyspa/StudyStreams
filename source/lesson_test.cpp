@@ -1,8 +1,12 @@
+#include "study/lesson.hpp"
 #include <gtest/gtest.h>
 #include <sstream>
-#include "study/lesson.hpp"
+#include "test/lesson_mock.hpp"
 
-TEST(Lesson, Load)
+using namespace study;
+
+TEST(Lesson, Construct)
 {
-	
+	LessonMock l; // Should suffice, as it does not overload anything relevant.
 }
+

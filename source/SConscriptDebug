@@ -1,0 +1,23 @@
+Import('base_env')
+Import('flags')
+
+frame_sources = Split("""
+exercise.cpp
+instream.cpp
+io.cpp
+lesson.cpp
+lessonloader.cpp
+logstream.cpp
+outstream.cpp
+stringutils.cpp
+""")
+
+test_sources = Glob("*_test.cpp") + ["test_main.cpp"]
+
+dbg_frame_env = base_env.Clone()
+dbg_frame_env.MergeFlags([flags['debug'], flags['frame']])
+dbg_frame_env.StaticLibrary('#lib/dbgstudy', frame_sources)
+
+test_env = base_env.Clone()
+test_env.MergeFlags([flags['debug'], flags['test']])
+test_env.Program("#test", test_sources)

@@ -3,32 +3,10 @@
 #include <list>
 #include <iterator>
 #include <boost/tokenizer.hpp>
+#include "study/stringutils.hpp"
 
 namespace study
 {
-
-namespace {
-
-std::string string_format(
-	std::string const& input,
-	std::string const& prefix,
-	unsigned int max_width)
-{
-	boost::char_separator<char> sep("\n");
-	boost::tokenizer<boost::char_separator<char>> tok(input, sep);
-	std::list<std::string> res;
-	std::string out;
-	for (auto it = tok.begin(); it != tok.end(); ++it)
-		res.push_back(*it);
-	for (auto it = res.begin(); it != res.end(); ++it) {
-		*it = prefix + *it;
-		// Will need some length-handling code here.
-		out += *it + '\n';
-	}
-	return out;
-}
-
-} // namespace 
 
 LogStream::LogStream() :
 	os_(0),
@@ -93,8 +71,31 @@ LogStream& LogStream::operator<<(EndLine const& /*value*/)
 {
 	assert(this);
 	oss_ << '\n';
-	(*os_) << format_(oss_.str(), prefix_, screen_width_);
+	this->flush();
 	return *this;
 }
+
+LogStream& LogStream::put(char ch)
+{
+	assert(this);
+	oss_.put(ch);
+	return *this;
+}
+
+LogStream& LogStream::write(char const* s, size_t count)
+{
+	assert(this);
+	oss_.write(s, count);
+	return *this;
+}
+
+LogStream& LogStream::flush() {
+	assert(this);
+	assert(os_);
+	(*os_) << format_(oss_.str(), prefix_, screen_width_);
+	oss_.str("");
+	return *this;
+}
+
 } // namespace study
 
