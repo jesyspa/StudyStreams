@@ -26,7 +26,7 @@ void HelloWorldLoader::construct()
 
 void HelloWorldLoader::welcome()
 {
-	log() << "Welcome to the first lesson in LearnC++.\n" << study::endl;
+	log() << "Welcome to the first lesson in StudyStreams.\n" << study::endl;
 	log() << "Rather unsuprisingly, this is a Hello World program. "
 		<< "See the helloworld.cpp file for instructions.\n" << study::endl;
 }
