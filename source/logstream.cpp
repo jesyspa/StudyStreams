@@ -35,6 +35,13 @@ LogStream& LogStream::connect_to_ostream(std::ostream& os)
 	return *this;
 }
 
+LogStream& LogStream::disconnect_from_ostream()
+{
+	assert(this);
+	os_ = 0;
+	return *this;
+}
+
 bool LogStream::has_ostream() const
 {
 	assert(this);
@@ -70,7 +77,6 @@ std::string const& LogStream::get_prefix() const
 LogStream& LogStream::operator<<(EndLine const& /*value*/)
 {
 	assert(this);
-	oss_ << '\n';
 	this->flush();
 	return *this;
 }

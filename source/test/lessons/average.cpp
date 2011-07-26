@@ -11,20 +11,7 @@
 
 using namespace study;
 
-namespace
-{
-
-unsigned int fibo(unsigned int i)
-{
-	if (i < 2)
-		return i;
-	else
-		return fibo(i-1) + fibo(i-2);
-}
-
-} // namespace
-
-class FibonnaciTestLoader :
+class AverageTestLoader:
 	public LessonLoader
 {
   public:
@@ -38,15 +25,21 @@ class FibonnaciTestLoader :
 			boost::mt19937&,
 			boost::uniform_int<>
 		> roll(gen, dist);
-		std::cout << "Using: ";
+		std::cout << "Using: \n";
 		for (unsigned int i = 0; i < 4; ++i) {
 			int j = roll();
-			std::cout << j << ' ';
-			add_exercise_at_end(new Exercise(
-				boost::lexical_cast<std::string>(j),
-				boost::lexical_cast<std::string>(fibo(j)),
-				boost::lexical_cast<std::string>(j))
-			);
+			int sum = 0;
+			Exercise* e = new Exercise(boost::lexical_cast<std::string>(i));
+			std::cout << "[ ";
+			for (int k = 0; k < j; ++k) {
+				int h = roll();
+				sum += h;
+				std::cout << h << " ";
+				e->append_input(boost::lexical_cast<std::string>(h));
+			}
+			e->set_answer(boost::lexical_cast<std::string>(sum/j));
+			add_exercise_at_end(e);
+			std::cout << " ]\n";
 		}
 		std::cout << std::endl;
 	}
@@ -68,20 +61,24 @@ class FibonnaciTestLoader :
 	int i_;
 };
 
-TEST(FibonnaciTestLoader, Check)
+TEST(AverageTestLoader, Check)
 {
 	std::stringstream ss;
 	InStream in;
 	LogStream log(ss);
 	OutStream out;
 	{
-		Lesson lesson(new FibonnaciTestLoader, in, log, out);
+		Lesson lesson(new AverageTestLoader, in, log, out);
 		while (lesson) {
-			int i;
-			EXPECT_TRUE(in >> i);
-			out << fibo(i) << endl;
+			int count = 0, sum = 0, t;
+			while (in >> t) {
+				count++;
+				sum += t;
+			}
+			out << (sum / count) << endl;
 		}
 	}
 	EXPECT_EQ("SSSS\n", ss.str());
 }
+
 

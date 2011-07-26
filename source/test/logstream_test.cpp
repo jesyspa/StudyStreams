@@ -99,3 +99,13 @@ TEST(LogStream, MultipleInput)
 	EXPECT_EQ(ss.str(), expected) << "Format error.";
 }
 
+TEST(LogStream, Flush)
+{
+	std::stringstream ss;
+	study::LogStream log(ss);
+	std::string expected = "| ***\n| ***\n";
+	log << "***\n***";
+	log.flush();
+	EXPECT_EQ(ss.str(), expected) << "Format error.";
+}
+

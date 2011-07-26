@@ -104,6 +104,13 @@ Exercise& Exercise::reset()
 	return *this;
 }
 
+Exercise& Exercise::append_input(std::string const& input)
+{
+	assert(this);
+	input_ += ' ' + input;
+	return *this;
+}
+
 Exercise& Exercise::submit(std::string const& user_answer)
 {
 	assert(this);

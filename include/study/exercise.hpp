@@ -76,6 +76,11 @@ class Exercise
 	//! Does not clear error flags.
 	virtual Exercise& reset();
 
+	//! \brief Append a string to the input.
+	//!
+	//! Whitespace is inserted between the old and new input.
+	Exercise& append_input(std::string const& input);
+	
 	//! \brief Submit the answer.
 	virtual Exercise& submit(std::string const& user_answer);
 

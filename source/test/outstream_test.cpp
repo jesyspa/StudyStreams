@@ -22,9 +22,19 @@ TEST(OutStream, PassInput)
 {
 	study::OutStream out;
 	study::LessonMock l;
-	EXPECT_EQ(&out.set_lesson(l), &out) << "Fluid interface error.";
+	out.set_lesson(l);
 	EXPECT_TRUE(out.has_lesson()) << "OutStream incorrectly marked as disconnceted.";
 	out << "A B C " << 4 << ' ' << 5 << study::endl;
+	EXPECT_EQ(l.view_submition(), "A B C 4 5") << "Submition passed incorrectly.";
+}
+
+TEST(OutStream, Flush)
+{
+	study::OutStream out;
+	study::LessonMock l;
+	out.set_lesson(l);
+	out << "A B C " << 4 << ' ' << 5;
+	out.flush();
 	EXPECT_EQ(l.view_submition(), "A B C 4 5") << "Submition passed incorrectly.";
 }
 

@@ -43,6 +43,11 @@ class LogStream :
 	//! \param[in,out] os is the ostream to be connected to.
 	LogStream& connect_to_ostream(std::ostream& os);
 
+	//! \brief Disconnects from the ostream currently connected to.
+	//!
+	//! No effect if not connected.
+	LogStream& disconnect_from_ostream();
+
 	//! \brief Return true if connected to an ostream.
 	bool has_ostream() const;
 

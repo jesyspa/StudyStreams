@@ -22,7 +22,6 @@ std::string string_format(
 	std::string out;
 	BOOST_FOREACH(std::string s, tok)
 		res.push_back(s);
-	res.pop_back(); // Get rid of last token.
 	for (auto it = res.begin(); it != res.end(); ++it) {
 		*it = prefix + *it;
 		if (max_width && it->length() > max_width) {
