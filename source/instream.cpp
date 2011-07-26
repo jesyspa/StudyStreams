@@ -11,6 +11,7 @@ InStream::~InStream() {}
 InStream& InStream::set_input(std::string const& input)
 {
 	assert(this);
+	iss_.clear();
 	iss_.str(input);
 	return *this;
 }

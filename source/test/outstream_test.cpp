@@ -25,6 +25,6 @@ TEST(OutStream, PassInput)
 	EXPECT_EQ(&out.set_lesson(l), &out) << "Fluid interface error.";
 	EXPECT_TRUE(out.has_lesson()) << "OutStream incorrectly marked as disconnceted.";
 	out << "A B C " << 4 << ' ' << 5 << study::endl;
-	EXPECT_EQ(l.view_submition(), "A B C 4 5\n") << "Submition passed incorrectly.";
+	EXPECT_EQ(l.view_submition(), "A B C 4 5") << "Submition passed incorrectly.";
 }
 

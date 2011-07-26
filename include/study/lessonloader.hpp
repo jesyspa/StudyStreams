@@ -33,16 +33,19 @@ class LessonLoader
 	virtual void construct() = 0;
 
 	//! \brief Called just before the first exercise starts.
-	virtual void welcome() {}
+	virtual void welcome();
+
+	//! \brief Called at the beginning of every exercise.
+	virtual void start_exercise();
 
 	//! \brief Called at the end of every exercise.
-	virtual void end_exercise() {}
+	virtual void end_exercise();
 
 	//! \brief Called after the last exercise (after end_exercise()).
-	virtual void part() {}
+	virtual void part();
 
 	//! \brief Called just before the object is destructed.
-	virtual void destruct() {}
+	virtual void destruct();
 
   protected:
 	//! \brief Return the InStream the lesson is connected to.

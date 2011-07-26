@@ -28,8 +28,7 @@ bool OutStream::has_lesson() const
 OutStream& OutStream::operator<<(EndLine const& /*value*/)
 {
 	assert(this);
-	*this << '\n';
-	this->flush();
+	flush();
 	return *this;
 }
 
@@ -53,6 +52,7 @@ OutStream& OutStream::flush()
 	assert(lesson_);
 	lesson_->submit(oss_.str());
 	oss_.str("");
+	oss_.clear();
 	return *this;
 }
 

@@ -51,6 +51,12 @@ class Lesson
 		OutStream& outs = study::cout
 	);
 	virtual ~Lesson();
+	
+	//! \brief Return true if there are more exercises.
+	operator bool() const;
+	
+	//! \brief Return true if there are no more exercises.
+	bool operator!() const;
 
 	//! \brief Return the result of the lesson so far.
 	Lesson::State result() const;

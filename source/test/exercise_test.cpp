@@ -5,9 +5,9 @@
 
 using namespace study;
 
-TEST(Exercise, DefaultConstructor)
+TEST(Exercise, MinimumConstructor)
 {
-	Exercise e;
+	Exercise e("Nameless");
 }
 
 TEST(Exercise, FullConstructor)

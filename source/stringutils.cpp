@@ -36,7 +36,7 @@ std::string string_format(
 	return out;
 }
 
-std::string string_normalise(std::string const& in) {
+std::string string_sanitise(std::string const& in) {
 	std::string s;
 	s.reserve(in.length());
 	for (auto it = in.begin(); it != in.end(); ++it) {

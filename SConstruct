@@ -8,7 +8,7 @@ Help("""
 flags = {
 	'cpp': ["-Wall", "-Wextra", "-std=c++0x"],
 	'debug': ["-O0", "-ggdb"],
-	'release': "-O2",
+	'release': ["-O2", "-DNDEBUG"],
 	'frame': "-I#include/",
 	'test': ["-I#include/", "-lgtest", "-lpthread", "-L#lib/", "-ldbgstudy"],
 }
@@ -25,8 +25,8 @@ Export('base_env')
 
 #### END ENVIRONMENTS ###
 
-SConscript("source/SConscriptDebug", variant_dir='dbgbuild')
-SConscript("source/SConscriptRelease", variant_dir='relbuild')
+SConscript("source/SConscriptDebug", variant_dir='.dbgbuild')
+SConscript("source/SConscriptRelease", variant_dir='.relbuild')
 
 Default('runtests')
 

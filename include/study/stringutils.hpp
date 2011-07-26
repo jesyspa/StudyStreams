@@ -18,7 +18,11 @@ std::string string_format(
 	unsigned int max_width
 );
 
-std::string string_normalise(std::string const& in);
+//! \brief Replaces special characters with their escape codes.
+//!
+//! \param[in] in is the string to be sanitised.
+//! \return Return a copy of the string.
+std::string string_sanitise(std::string const& in);
 
 //! \brief Literal comparison.
 //!

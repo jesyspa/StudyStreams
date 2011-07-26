@@ -1,7 +1,7 @@
 Import('base_env')
 Import('flags')
 
-test_sources = Glob("*_test.cpp") + ["test_main.cpp"]
+test_sources = Glob("*_test.cpp") + Glob("lessons/*.cpp") + ["test_main.cpp"]
 
 test_env = base_env.Clone()
 test_env.MergeFlags([flags['debug'], flags['test']])

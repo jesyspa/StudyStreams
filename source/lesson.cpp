@@ -24,18 +24,34 @@ Lesson::Lesson(
 	lesson_loader_->construct();
 	current_exercise_ = exercise_list_.begin();
 	lesson_loader_->welcome();
+	if (*this) {
+		lesson_loader_->start_exercise();
+		in_->set_input(current_exercise_->get_input());
+	} else {
+		lesson_loader_->part();
+	}
 }
 
 Lesson::~Lesson()
 {
 	try {
-		lesson_loader_->part();
 		lesson_loader_->destruct();
 		delete lesson_loader_;
 	}
 	catch (...) {
 		std::cerr << "Exception thrown in Lesson::~Lesson.  Please report this.\n";
+		assert(0);
 	}
+}
+
+Lesson::operator bool() const
+{
+	return current_exercise_ != exercise_list_.end();
+}
+
+bool Lesson::operator!() const
+{
+	return current_exercise_ == exercise_list_.end();
 }
 
 Lesson::State Lesson::result() const
@@ -56,6 +72,12 @@ Lesson& Lesson::submit(std::string const& answer)
 	current_exercise_->submit(answer);
 	lesson_loader_->end_exercise();
 	++current_exercise_;
+	if (*this) {
+		lesson_loader_->start_exercise();
+		in_->set_input(current_exercise_->get_input());
+	} else {
+		lesson_loader_->part();
+	}
 	return *this;
 }
 

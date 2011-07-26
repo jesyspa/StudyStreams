@@ -11,8 +11,6 @@ namespace study
 //!
 //! Only used internally: you should not encounter this class when creating
 //! or solving exercises.
-//!
-//! 
 class Exercise
 {
   public:
@@ -31,18 +29,18 @@ class Exercise
 	//! \brief Create an exercise.
 	//!
 	//! \param[in] name is the name of the exercise.
-	//! \param[in] pre_description is the description given before the exercise.
-	//! \param[in] post_description is the description given after the exercise.
+	//! \param[in] pre_desc is the description given before the exercise.
+	//! \param[in] post_desc is the description given after the exercise.
 	//! \param[in] input is the input the exercise is to give the user.
 	//! \param[in] answer is the reply from the user that would be correct.
 	//! \param[in] compare is the function to use to compare the expected and
 	//!            given answer.
 	Exercise(
-		std::string const& name = "",
+		std::string const& name,
 		std::string const& answer = "",
 		std::string const& input = "",
-		std::string const& pre_description = "",
-		std::string const& post_description = "",
+		std::string const& pre_desc = "",
+		std::string const& post_desc = "",
 		compare_func compare = simple_compare
 	);
 	virtual ~Exercise() {}
@@ -54,9 +52,9 @@ class Exercise
 	//! \brief Set the input passed by the exercise.
 	Exercise& set_input(std::string const& input);
 	//! \brief Set the description at the beginning of the exercise.
-	Exercise& set_pre_description(std::string const& pre_description);
+	Exercise& set_pre_desc(std::string const& pre_desc);
 	//! \brief Set the description at the end of the exercise.
-	Exercise& set_post_description(std::string const& post_description);
+	Exercise& set_post_desc(std::string const& post_desc);
 	//! \brief Dummy function, used to make code more readable.
 	Exercise& and_() { return *this; }
 
@@ -67,11 +65,11 @@ class Exercise
 	//! \brief Get the input passed by the exercise.
 	std::string const& get_input() const;
 	//! \brief Get the description at the beginning of the exercise.
-	std::string const& get_pre_description() const;
+	std::string const& get_pre_desc() const;
 	//! \brief Get the description at the end of the exercise.
-	std::string const& get_post_description() const;
+	std::string const& get_post_desc() const;
 	//! \brief Get the actual answer recieved.
-	std::string const& get_received() const;
+	std::string const& get_user_answer() const;
 	
 	//! \brief Reset the exercise, removing the answer given.
 	//!
@@ -79,7 +77,7 @@ class Exercise
 	virtual Exercise& reset();
 
 	//! \brief Submit the answer.
-	virtual Exercise& submit(std::string const& given_answer);
+	virtual Exercise& submit(std::string const& user_answer);
 
 	//! \brief Check whether the result has a certain flag set.
 	//!
@@ -106,9 +104,9 @@ class Exercise
 	std::string name_;
 	std::string answer_;
 	std::string input_;
-	std::string pre_description_;
-	std::string post_description_;
-	std::string received_answer_;
+	std::string pre_desc_;
+	std::string post_desc_;
+	std::string user_answer_;
 	compare_func compare_;
 };
 

@@ -16,7 +16,11 @@ class LessonLoaderMock :
 	public LessonLoader
 {
   public:
-	void construct() {}
+	void construct() {
+		log().set_prefix("[ ");
+	}
+	void welcome() {}
+	void part() {}
 };
 
 
