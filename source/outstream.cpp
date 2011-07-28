@@ -10,6 +10,11 @@ OutStream::OutStream() :
 {
 }
 
+OutStream::OutStream(Lesson& lesson) :
+	lesson_(&lesson)
+{
+}
+
 OutStream::~OutStream() {}
 
 OutStream& OutStream::set_lesson(Lesson& lesson)

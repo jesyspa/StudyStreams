@@ -20,6 +20,7 @@ class OutStream :
 {
   public:
 	OutStream();
+	OutStream(Lesson& lesson);
 	~OutStream();
 
 	// Custom functions

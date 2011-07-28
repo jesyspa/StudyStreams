@@ -6,6 +6,12 @@ namespace study
 {
 
 InStream::InStream() {}
+
+InStream::InStream(std::string const& input) :
+	iss_(input)
+{
+}
+
 InStream::~InStream() {}
 
 InStream& InStream::set_input(std::string const& input)

@@ -5,4 +5,8 @@
 doc/
 .scons*
 runtests
+*.toc
+*.aux
+*.pdf
+spec*.log
 

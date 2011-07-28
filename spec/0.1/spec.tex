@@ -1,0 +1,29 @@
+\documentclass[12pt,a4paper]{report}
+\title{StudyStreams 0.1 Specification}
+\author{Anton Golov}
+\begin{document}
+	\maketitle{}
+	\tableofcontents{}
+	\chapter{Introduction and Goals}
+		StudyStreams is a C++ framework that intends to simplify learning
+		the language by giving students the chance to write programs that
+		are very similar to what a usual C++ program would look like, but
+		would be automatically tested.  The \textbf{solution}, written by
+		the \textbf{student}, uses \textbf{streams} to communicate with
+		the \textbf{lesson} that is written by the \textbf{tutor}.  These
+		streams use the \texttt{std::istream} and \texttt{std::ostream}
+		interfaces, which allow them to behave like standard streams.
+
+		A typical lesson consists of some sort of welcome, a number of
+		exercises, and a parting message.  Most of the lesson structure is
+		already in place, so that the teacher need only provide the input
+		an exercise will give to the student, and the output it is to
+		expect.
+	\chapter{Usage Examples}
+		\section{Alice}
+		\section{Bob}
+		\section{Charles}
+	\chapter{Non-goals}
+	\chapter{Lesson Interface}
+	\chapter{Solution Interface}
+\end{document}

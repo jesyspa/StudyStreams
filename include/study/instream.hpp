@@ -18,6 +18,7 @@ class InStream :
 {
   public:
 	InStream();
+	InStream(std::string const& input);
 	~InStream();
 
 	//! \brief Set the string that will be passed to the user.
