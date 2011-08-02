@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 #include <sstream>
+#include "study/lessoninterface.hpp"
 #include "study/lesson.hpp"
-#include "study/lessonloader.hpp"
 #include "study/io.hpp"
 
 using namespace study;
 
 class StagesTestLoader :
-	public LessonLoader
+	public Lesson
 {
   public:
 	StagesTestLoader(unsigned int i) : i_(i) {}
@@ -36,7 +36,7 @@ TEST(StagesTestLoader, Zero)
 	LogStream log(ss);
 	OutStream out;
 	{
-		Lesson l(new StagesTestLoader(0), in, log, out);
+		LessonInterface l(new StagesTestLoader(0), in, log, out);
 		while(l)
 			out.flush();
 	}
@@ -50,7 +50,7 @@ TEST(StagesTestLoader, One)
 	LogStream log(ss);
 	OutStream out;
 	{
-		Lesson l(new StagesTestLoader(1), in, log, out);
+		LessonInterface l(new StagesTestLoader(1), in, log, out);
 		while(l)
 			out.flush();
 	}
@@ -64,7 +64,7 @@ TEST(StagesTestLoader, Three)
 	LogStream log(ss);
 	OutStream out;
 	{
-		Lesson l(new StagesTestLoader(3), in, log, out);
+		LessonInterface l(new StagesTestLoader(3), in, log, out);
 		while(l)
 			out.flush();
 	}

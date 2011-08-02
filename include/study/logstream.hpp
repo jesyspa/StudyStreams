@@ -10,12 +10,12 @@
 namespace study
 {
 
-class Lesson;
+class LessonInterface;
 
 //! \brief  Stream that allows user to submit data.
 //! 
 //! This provides a replacement for std::ostream that pipes data from the user
-//! both to the associated Lesson object and the standard output.
+//! both to the associated LessonInterface object and the standard output.
 class LogStream :
 	boost::noncopyable
 {

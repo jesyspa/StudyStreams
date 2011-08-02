@@ -5,8 +5,8 @@
 #include <boost/random/variate_generator.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
+#include "study/lessoninterface.hpp"
 #include "study/lesson.hpp"
-#include "study/lessonloader.hpp"
 #include "study/io.hpp"
 
 using namespace study;
@@ -25,7 +25,7 @@ unsigned int fibo(unsigned int i)
 } // namespace
 
 class FibonnaciTestLoader :
-	public LessonLoader
+	public Lesson
 {
   public:
 	void construct()
@@ -75,7 +75,7 @@ TEST(FibonnaciTestLoader, Check)
 	LogStream log(ss);
 	OutStream out;
 	{
-		Lesson lesson(new FibonnaciTestLoader, in, log, out);
+		LessonInterface lesson(new FibonnaciTestLoader, in, log, out);
 		while (lesson) {
 			int i;
 			EXPECT_TRUE(in >> i);

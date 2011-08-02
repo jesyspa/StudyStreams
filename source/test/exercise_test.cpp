@@ -14,19 +14,29 @@ TEST(Exercise, FullConstructor)
 {
 	Exercise e(
 		"Test",
-		"This will be a testing exercise.",
-		"This was a testing exercise.",
-		"",
-		"",
+		"Some question.",
+		"Some answer.",
 		whitespace_ignore_compare
+	);
+}
+
+TEST(Exercise, NamedParamatersConstructor)
+{
+	using namespace keywords;
+	Exercise e(
+		_compare=whitespace_ignore_compare,
+		_name="Test",
+		_answer="Some answer.",
+		_input="Some question."
 	);
 }
 
 TEST(Exercise, Result)
 {
+	using namespace keywords;
 	Exercise e(
-		"",
-		"ABCD"
+		"Unnamed",
+		_answer="ABCD"
 	);
 	EXPECT_TRUE(e.result_is(Exercise::State::noinput))
 		<< "Exercise marked as having been tried.";

@@ -1,11 +1,11 @@
-#include "study/lesson.hpp"
+#include "study/lessoninterface.hpp"
 #include <gtest/gtest.h>
 #include <sstream>
-#include "test/lesson_mock.hpp"
+#include "test/lessoninterface_mock.hpp"
 
 using namespace study;
 
-TEST(Lesson, Construct)
+TEST(LessonInterface, Construct)
 {
 	LessonMock l; // Should suffice, as it does not overload anything relevant.
 }

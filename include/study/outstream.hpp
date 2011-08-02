@@ -9,23 +9,23 @@
 namespace study
 {
 
-class Lesson;
+class LessonInterface;
 
 //! \brief  Stream that allows user to submit data.
 //! 
 //! This provides a replacement for std::ostream that pipes data from the user
-//! both to the associated Lesson object and the standard output.
+//! both to the associated LessonInterface object and the standard output.
 class OutStream :
 	boost::noncopyable
 {
   public:
 	OutStream();
-	OutStream(Lesson& lesson);
+	OutStream(LessonInterface& lesson);
 	~OutStream();
 
 	// Custom functions
 	//! \brief Associate the stream with a certain lesson.
-	OutStream& set_lesson(Lesson& lesson);
+	OutStream& set_interface(LessonInterface& lesson);
 
 	//! \brief Return true if stream is associated with a lesson.
 	bool has_lesson() const;
@@ -50,7 +50,7 @@ class OutStream :
 	OutStream& flush();
 
   private:
-	Lesson* lesson_;
+	LessonInterface* lesson_;
 	std::ostringstream oss_;
 };
 

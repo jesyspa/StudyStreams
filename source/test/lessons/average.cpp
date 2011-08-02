@@ -5,14 +5,14 @@
 #include <boost/random/variate_generator.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
+#include "study/lessoninterface.hpp"
 #include "study/lesson.hpp"
-#include "study/lessonloader.hpp"
 #include "study/io.hpp"
 
 using namespace study;
 
 class AverageTestLoader:
-	public LessonLoader
+	public Lesson
 {
   public:
 	void construct()
@@ -68,7 +68,7 @@ TEST(AverageTestLoader, Check)
 	LogStream log(ss);
 	OutStream out;
 	{
-		Lesson lesson(new AverageTestLoader, in, log, out);
+		LessonInterface lesson(new AverageTestLoader, in, log, out);
 		while (lesson) {
 			int count = 0, sum = 0, t;
 			while (in >> t) {

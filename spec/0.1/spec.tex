@@ -1,6 +1,6 @@
 \documentclass[12pt,a4paper]{report}
 \title{StudyStreams 0.1 Specification}
-\author{Anton Golov}
+\author{Anton Golov (\texttt{kdesevis@gmail.com})}
 \begin{document}
 	\maketitle{}
 	\tableofcontents{}
@@ -19,11 +19,81 @@
 		already in place, so that the teacher need only provide the input
 		an exercise will give to the student, and the output it is to
 		expect.
+
+		A typical solution is a C++ program written by the student which
+		receives input from the lesson, processes it, and passes output
+		back.  An incomplete solution can be presented by the teacher,
+		which should give the student an idea of what is required.  A
+		solution should ideally be possible to translate into standard
+		C++ program by changing the included headers and using \texttt{std}
+		instead of \texttt{study}.
+
+		The focus of the first release is to be usable for the students.
+		StudyStreams must be easy to install on Linux systems, and the
+		lessons must be easy to compile.  By themselves, all lessons must
+		compile successfully, but may not pass as they are.
+
+		\section{Summary}
+			To outline, the following are to be considered goals for version
+			0.1 of StudyStreams, in no particular order.
+			\begin{itemize}
+				\item A config, build and install script for the static library.
+				\item An implementation that is capable of running all currently
+					available lessons.
+				\item At least 15 lessons of various difficulty.
+				\item A system for easy compilation of lessons.
+				\item Operational lesson-input, lesson-output, and debug streams.
+			\end{itemize}
+		
 	\chapter{Usage Examples}
+		In order to illustrate the nature of StudyStreams a little better,
+		this section provides some situations in which they can come in handy.
+		Suggestions for more examples are always welcome, please email them to
+		the author of this spec.
+
 		\section{Alice}
+			Alice is an engineer in a small company producing intelligent
+			toasters.  The last programmer has recently mysteriously
+			disappeared, and now she has to quickly brush up her C++ in
+			order to fix an critical bug that caused the products to grow
+			legs.  Having no time to make herself a proper study schedule,
+			she instead downloads StudyStreams and starts doing the exercises,
+			while keeping a careful watch out for fiendish kitchen apparatus.
+
 		\section{Bob}
+			Ever since he became a professor in computer science, Bob has wished
+			there'd be some easier way to grade the exams that the students had
+			to hand in.  As things were, there was a series of input files and
+			output files and pipes and Cthulhu knows what else, which sort of
+			worked, but didn't allow the versality that Bob wanted.  Adding a new
+			test was so much work, that he simply hasn't bothered the last five
+			years, which the students had noticed and were using to its fullest.
+
+			Deciding that such blatant cheating should not be allowed to continue,
+			Bob downloaded StudyStreams and wrote up some custom lesson subclasses
+			that represent the different type of tests.  Now, in order to add a new
+			function, he simply has to derive from one of these subclasses and
+			implement the desired function.
+
 		\section{Charles}
+			Charles is one of Bob's students, and while he is somewhat upset that
+			he can no longer copy the work of older students, but otherwise doesn't
+			mind the change:  a different namespace name for some objects, but
+			otherwise no change.
+
 	\chapter{Non-goals}
+		At the moment, the following features are not expected, and no work
+		should be done to implement them in the main branch, unless it proves
+		trivial.  This list is likely to be updated as brilliant ideas are suggested.
+		\begin{itemize}
+			\item Tests based on anything other than streams.
+			\item Automatic generation of lessons.
+		\end{itemize}
+
 	\chapter{Lesson Interface}
+		The primary interface for the creation of lessons is the \texttt{Lesson} class.
+		\footnote{In the past, this was called the \texttt{LessonLoader}.} This class
+		should be publically inherited from, and the following functions may be
+		overriden in order to provide the desired functionality.
 	\chapter{Solution Interface}
 \end{document}

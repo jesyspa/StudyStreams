@@ -6,24 +6,6 @@
 namespace study
 {
 
-Exercise::Exercise(
-	std::string const& name,
-	std::string const& answer,
-	std::string const& input,
-	std::string const& pre_desc,
-	std::string const& post_desc,
-	compare_func compare
-) :
-	state_(State::noinput),
-	name_(name),
-	answer_(answer),
-	input_(input),
-	pre_desc_(pre_desc),
-	post_desc_(post_desc),
-	compare_(compare)
-{
-}
-
 Exercise& Exercise::set_name(std::string const& name)
 {
 	assert(this);
@@ -45,20 +27,6 @@ Exercise& Exercise::set_input(std::string const& input)
 	return *this;
 }
 
-Exercise& Exercise::set_pre_desc(std::string const& pre_desc)
-{
-	assert(this);
-	pre_desc_ = pre_desc;
-	return *this;
-}
-
-Exercise& Exercise::set_post_desc(std::string const& post_desc)
-{
-	assert(this);
-	post_desc_ = post_desc;
-	return *this;
-}
-
 std::string const& Exercise::get_name() const
 {
 	assert(this);
@@ -75,18 +43,6 @@ std::string const& Exercise::get_input() const
 {
 	assert(this);
 	return input_;
-}
-
-std::string const& Exercise::get_pre_desc() const
-{
-	assert(this);
-	return pre_desc_;
-}
-
-std::string const& Exercise::get_post_desc() const
-{
-	assert(this);
-	return post_desc_;
 }
 
 std::string const& Exercise::get_user_answer() const

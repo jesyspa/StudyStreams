@@ -1,98 +1,69 @@
 #include "study/lesson.hpp"
-#include <iostream>
-#include "study/lessonloader.hpp"
-#include "study/enumutils.hpp"
+#include "study/lessoninterface.hpp"
+#include "study/instream.hpp"
+#include "study/logstream.hpp"
+#include "study/outstream.hpp"
 
 namespace study
 {
 
-Lesson::Lesson(
-	LessonLoader* loader,
-	InStream& ins,
-	LogStream& logs,
-	OutStream& outs
-) :
-	state_(Lesson::State::noinput),
-	lesson_loader_(loader),
-	in_(&ins),
-	log_(&logs),
-	out_(&outs),
-	current_exercise_(exercise_list_.begin())
+void Lesson::set_interface(LessonInterface& l)
 {
-	out_->set_lesson(*this);
-	lesson_loader_->set_lesson(*this);
-	lesson_loader_->construct();
-	current_exercise_ = exercise_list_.begin();
-	lesson_loader_->welcome();
-	if (*this) {
-		lesson_loader_->start_exercise();
-		in_->set_input(current_exercise_->get_input());
-	} else {
-		lesson_loader_->part();
+	interface_ = &l;
+}
+
+InStream& Lesson::in()
+{
+	return *interface_->in_;
+}
+
+LogStream& Lesson::log()
+{
+	return *interface_->log_;
+}
+
+OutStream& Lesson::out()
+{
+	return *interface_->out_;
+}
+
+LessonInterface& Lesson::interface()
+{
+	return *interface_;
+}
+
+void Lesson::welcome()
+{
+	log() << "------ Start LessonInterface ------\n" << study::endl;
+}
+
+void Lesson::start_exercise()
+{
+}
+
+void Lesson::end_exercise()
+{
+	auto e = current_exercise();
+	if (e->result_is(Exercise::State::success)) {
+		log() << "Exercise " << e->get_name() << ": success." << study::endl;
+	} else { // Assuming exercises always succeed or fail.
+		log() << "Exercise " << e->get_name() << ": fail." << study::endl;
+		std::string old_prefix = log().get_prefix();
+		log().set_prefix(old_prefix + "==| ");
+		log() << "Expected \"" << e->get_answer() << "\"\n"
+		      << "Received \"" << e->get_user_answer() << "\"" << study::endl;
+		log().set_prefix(old_prefix);
 	}
+	log() << study::endl;
 }
 
-Lesson::~Lesson()
+void Lesson::part()
 {
-	try {
-		lesson_loader_->destruct();
-		delete lesson_loader_;
-	}
-	catch (...) {
-		std::cerr << "Exception thrown in Lesson::~Lesson.  Please report this.\n";
-		assert(0);
-	}
+	log() << "\n------  End LessonInterface  ------" << study::endl;
 }
 
-Lesson::operator bool() const
+void Lesson::destruct()
 {
-	return current_exercise_ != exercise_list_.end();
 }
-
-bool Lesson::operator!() const
-{
-	return current_exercise_ == exercise_list_.end();
-}
-
-Lesson::State Lesson::result() const
-{
-	assert(this);
-	return state_;
-}
-
-bool Lesson::result_is(Lesson::State st) const
-{
-	assert(this);
-	return state_has_all(state_, st);
-}
-
-Lesson& Lesson::submit(std::string const& answer)
-{
-	assert(this);
-	current_exercise_->submit(answer);
-	lesson_loader_->end_exercise();
-	++current_exercise_;
-	if (*this) {
-		lesson_loader_->start_exercise();
-		in_->set_input(current_exercise_->get_input());
-	} else {
-		lesson_loader_->part();
-	}
-	return *this;
-}
-
-void Lesson::add_exercise_here(Exercise* e)
-{
-	ExerciseIterator t = current_exercise_;
-	++t;
-	exercise_list_.insert(t, e);
-}
-
-void Lesson::add_exercise_at_end(Exercise* e)
-{
-	exercise_list_.push_back(e);
-}
-
 
 } // namespace study
-

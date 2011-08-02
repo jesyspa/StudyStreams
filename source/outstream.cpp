@@ -1,6 +1,6 @@
 #include <cassert>
 #include "study/outstream.hpp"
-#include "study/lesson.hpp"
+#include "study/lessoninterface.hpp"
 
 namespace study
 {
@@ -10,14 +10,14 @@ OutStream::OutStream() :
 {
 }
 
-OutStream::OutStream(Lesson& lesson) :
+OutStream::OutStream(LessonInterface& lesson) :
 	lesson_(&lesson)
 {
 }
 
 OutStream::~OutStream() {}
 
-OutStream& OutStream::set_lesson(Lesson& lesson)
+OutStream& OutStream::set_interface(LessonInterface& lesson)
 {
 	assert(this);
 	lesson_ = &lesson;
