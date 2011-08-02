@@ -34,7 +34,7 @@ class LessonInterface
 	//! \param[in,out] outs is the stream to be used for passing output to
 	//!                the lesson.
 	LessonInterface(
-		Lesson* loader,
+		Lesson* lesson,
 		InStream& ins = study::cin,
 		LogStream& logs = study::lout,
 		OutStream& outs = study::cout
@@ -55,7 +55,6 @@ class LessonInterface
 	LessonInterface& submit(std::string const& answer);
 
   private:
-	
 	boost::scoped_ptr<Lesson> lesson_;
 	InStream* in_;
 	LogStream* log_;

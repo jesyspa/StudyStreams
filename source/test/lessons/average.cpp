@@ -6,13 +6,13 @@
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
 #include "study/lessoninterface.hpp"
-#include "study/lesson.hpp"
+#include "study/linearlesson.hpp"
 #include "study/io.hpp"
 
 using namespace study;
 
-class AverageTestLoader:
-	public Lesson
+class AverageTest :
+	public LinearLesson
 {
   public:
 	void construct()
@@ -38,7 +38,7 @@ class AverageTestLoader:
 				e->append_input(boost::lexical_cast<std::string>(h));
 			}
 			e->set_answer(boost::lexical_cast<std::string>(sum/j));
-			add_exercise_at_end(e);
+			add_exercise(e);
 			std::cout << " ]\n";
 		}
 		std::cout << std::endl;
@@ -46,29 +46,26 @@ class AverageTestLoader:
 	void welcome() {}
 	void start_exercise() {}
 	void end_exercise() {
-		auto e = current_exercise();
-		if (e->result_is(Exercise::State::success))
+		Exercise& e = get_exercise();
+		if (e.result_is(Exercise::State::success))
 			log() << "S";
 		else
 			log() << "F";
 	}
 	void part() {
-		log() << endl;
+		log() << study::endl;
 	}
 	void destruct() {}
-
-  private:
-	int i_;
 };
 
-TEST(AverageTestLoader, Check)
+TEST(AverageTest, Check)
 {
 	std::stringstream ss;
 	InStream in;
 	LogStream log(ss);
 	OutStream out;
 	{
-		LessonInterface lesson(new AverageTestLoader, in, log, out);
+		LessonInterface lesson(new AverageTest, in, log, out);
 		while (lesson) {
 			int count = 0, sum = 0, t;
 			while (in >> t) {

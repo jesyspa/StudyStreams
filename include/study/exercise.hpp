@@ -2,6 +2,7 @@
 #define INCLUDE_STUDY_EXERCISE_HPP
 
 #include <string>
+#include <iostream> // DBG
 #include <boost/parameter/keyword.hpp>
 #include <boost/parameter/name.hpp>
 #include <boost/parameter/preprocessor.hpp>
@@ -43,7 +44,8 @@ struct Exercise_Impl
 		answer_(args[keywords::_answer | ""]),
 		input_(args[keywords::_input | ""]),
 		compare_(args[keywords::_compare | simple_compare])
-	{}
+	{
+	}
 
 	State state_;
 	std::string name_;
@@ -90,7 +92,7 @@ class Exercise
 			(compare, *)
 		)
 	)
-	virtual ~Exercise() {}
+	~Exercise() {}
 
 	//! \brief Set the name of the exercise.
 	Exercise& set_name(std::string const& name);
@@ -113,7 +115,7 @@ class Exercise
 	//! \brief Reset the exercise, removing the answer given.
 	//!
 	//! Does not clear error flags.
-	virtual Exercise& reset();
+	Exercise& reset();
 
 	//! \brief Append a string to the input.
 	//!
@@ -121,7 +123,7 @@ class Exercise
 	Exercise& append_input(std::string const& input);
 	
 	//! \brief Submit the answer.
-	virtual Exercise& submit(std::string const& user_answer);
+	Exercise& submit(std::string const& user_answer);
 
 	//! \brief Check whether the result has a certain flag set.
 	//!

@@ -1,23 +1,23 @@
 #include <gtest/gtest.h>
 #include <sstream>
 #include "study/lessoninterface.hpp"
-#include "study/lesson.hpp"
+#include "study/linearlesson.hpp"
 #include "study/io.hpp"
 
 using namespace study;
 
-class StagesTestLoader :
-	public Lesson
+class StagesTest :
+	public LinearLesson
 {
   public:
-	StagesTestLoader(unsigned int i) : i_(i) {}
+	StagesTest(unsigned int i) : i_(i) {}
 
 	void construct()
 	{
 		log().set_prefix("");
 		log() << "C";
 		for (unsigned int i = 0; i < i_; ++i)
-			add_exercise_at_end(new Exercise(""));
+			add_exercise(new Exercise(""));
 	}
 	void welcome() { log() << "W"; }
 	void start_exercise() { log() << "S"; }
@@ -29,42 +29,42 @@ class StagesTestLoader :
 	unsigned int i_;
 };
 
-TEST(StagesTestLoader, Zero)
+TEST(StagesTest, Zero)
 {
 	std::stringstream ss;
 	InStream in;
 	LogStream log(ss);
 	OutStream out;
 	{
-		LessonInterface l(new StagesTestLoader(0), in, log, out);
+		LessonInterface l(new StagesTest(0), in, log, out);
 		while(l)
 			out.flush();
 	}
 	EXPECT_EQ("CWPD\n", ss.str());
 }
 
-TEST(StagesTestLoader, One)
+TEST(StagesTest, One)
 {
 	std::stringstream ss;
 	InStream in;
 	LogStream log(ss);
 	OutStream out;
 	{
-		LessonInterface l(new StagesTestLoader(1), in, log, out);
+		LessonInterface l(new StagesTest(1), in, log, out);
 		while(l)
 			out.flush();
 	}
 	EXPECT_EQ("CWSEPD\n", ss.str());
 }
 
-TEST(StagesTestLoader, Three)
+TEST(StagesTest, Three)
 {
 	std::stringstream ss;
 	InStream in;
 	LogStream log(ss);
 	OutStream out;
 	{
-		LessonInterface l(new StagesTestLoader(3), in, log, out);
+		LessonInterface l(new StagesTest(3), in, log, out);
 		while(l)
 			out.flush();
 	}

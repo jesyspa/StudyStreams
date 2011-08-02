@@ -1,4 +1,5 @@
 #include "study/lesson.hpp"
+#include "study/exercise.hpp"
 #include "study/lessoninterface.hpp"
 #include "study/instream.hpp"
 #include "study/logstream.hpp"
@@ -27,31 +28,26 @@ OutStream& Lesson::out()
 	return *interface_->out_;
 }
 
-LessonInterface& Lesson::interface()
-{
-	return *interface_;
-}
-
 void Lesson::welcome()
 {
-	log() << "------ Start LessonInterface ------\n" << study::endl;
+	log() << "------ Start Lesson ------\n" << study::endl;
 }
 
 void Lesson::start_exercise()
-{
-}
+{}
 
-void Lesson::end_exercise()
+void Lesson::end_exercise(std::string const& answer)
 {
-	auto e = current_exercise();
-	if (e->result_is(Exercise::State::success)) {
-		log() << "Exercise " << e->get_name() << ": success." << study::endl;
+	Exercise& e = get_exercise();
+	e.submit(answer);
+	if (e.result_is(Exercise::State::success)) {
+		log() << "Exercise " << e.get_name() << ": passed." << study::endl;
 	} else { // Assuming exercises always succeed or fail.
-		log() << "Exercise " << e->get_name() << ": fail." << study::endl;
+		log() << "Exercise " << e.get_name() << ": failed." << study::endl;
 		std::string old_prefix = log().get_prefix();
 		log().set_prefix(old_prefix + "==| ");
-		log() << "Expected \"" << e->get_answer() << "\"\n"
-		      << "Received \"" << e->get_user_answer() << "\"" << study::endl;
+		log() << "Expected \"" << e.get_answer() << "\"\n"
+		      << "Received \"" << e.get_user_answer() << "\"" << study::endl;
 		log().set_prefix(old_prefix);
 	}
 	log() << study::endl;
@@ -59,7 +55,7 @@ void Lesson::end_exercise()
 
 void Lesson::part()
 {
-	log() << "\n------  End LessonInterface  ------" << study::endl;
+	log() << "\n------  End Lesson ------" << study::endl;
 }
 
 void Lesson::destruct()

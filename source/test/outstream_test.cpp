@@ -1,40 +1,46 @@
 #include "study/outstream.hpp"
 #include <sstream>
 #include <gtest/gtest.h>
-#include "test/lessoninterface_mock.hpp"
+#include "study/lessoninterface.hpp"
+#include "test/lesson_mock.hpp"
 #include "study/logstream.hpp"
+
+using namespace study;
 
 TEST(OutStream, DefaultConstructor)
 {
-	study::OutStream out;
+	OutStream out;
 	EXPECT_FALSE(out.has_lesson()) << "OutStream incorrectly marked as connected.";
 }
 
 TEST(OutStream, SetLessonInterface)
 {
-	study::OutStream out;
-	study::LessonInterfaceMock l;
+	OutStream out;
+	LessonMock* p = new LessonMock();
+	LessonInterface l(p);
 	EXPECT_EQ(&out.set_interface(l), &out) << "Fluid interface error.";
 	EXPECT_TRUE(out.has_lesson()) << "OutStream incorrectly marked as disconnceted.";
 }
 
 TEST(OutStream, PassInput)
 {
-	study::OutStream out;
-	study::LessonInterfaceMock l;
+	OutStream out;
+	LessonMock* p = new LessonMock();
+	p->expect("A B C 4 5");
+	LessonInterface l(p);
 	out.set_interface(l);
 	EXPECT_TRUE(out.has_lesson()) << "OutStream incorrectly marked as disconnceted.";
-	out << "A B C " << 4 << ' ' << 5 << study::endl;
-	EXPECT_EQ(l.view_submition(), "A B C 4 5") << "Submition passed incorrectly.";
+	out << "A B C " << 4 << ' ' << 5 << endl;
 }
 
 TEST(OutStream, Flush)
 {
-	study::OutStream out;
-	study::LessonInterfaceMock l;
+	OutStream out;
+	LessonMock* p = new LessonMock();
+	p->expect("A B C 4 5");
+	LessonInterface l(p);
 	out.set_interface(l);
 	out << "A B C " << 4 << ' ' << 5;
 	out.flush();
-	EXPECT_EQ(l.view_submition(), "A B C 4 5") << "Submition passed incorrectly.";
 }
 

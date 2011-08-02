@@ -1,7 +1,6 @@
 #ifndef INCLUDE_STUDY_LESSON_HPP
 #define INCLUDE_STUDY_LESSON_HPP
 
-#include <boost/ptr_container/ptr_list.hpp>
 #include "study/exercise.hpp"
 
 namespace study
@@ -14,13 +13,10 @@ class InStream;
 
 //! \brief Abstract base class for loading the lesson.
 //!
-//! The name is somewhat misleading:  other than providing the lesson with
-//! exercises, it also provides some helper functions for input and output,
-//! and for controlling the flow of the lesson.
+//! Responsible for creating and storing the exercises and providing the
+//! user with information on what is going on.
 class Lesson
 {
-	//! \brief Iterator for Exercises in the LessonInterface.
-	typedef boost::ptr_list<Exercise>::iterator ExerciseIterator;
   public:
 	virtual ~Lesson() {}
 
@@ -32,6 +28,9 @@ class Lesson
 	//! \brief Called when the lesson is first constructed.
 	virtual void construct() = 0;
 
+	//! \brief Jump to the first exercise.
+	virtual void jump_to_first() = 0;
+
 	//! \brief Called just before the first exercise starts.
 	virtual void welcome();
 
@@ -39,7 +38,12 @@ class Lesson
 	virtual void start_exercise();
 
 	//! \brief Called at the end of every exercise.
-	virtual void end_exercise();
+	//!
+	//! \param[in] answer is the answer the user gave.
+	virtual void end_exercise(std::string const& answer);
+
+	//! \brief Move on to the next exercise.
+	virtual void next_exercise() = 0;
 
 	//! \brief Called after the last exercise (after end_exercise()).
 	virtual void part();
@@ -50,12 +54,15 @@ class Lesson
 	//! \brief Return true if the current exercise is valid/present.
 	//!
 	//! Intended to check whether we are at the last exercise or not.
-	virtual bool exercise_is_valid() = 0;
+	virtual bool exercise_is_valid() const = 0;
 
 	//! \brief Get the input of the current exercise.
-	virtual std::string get_exercise_input() = 0;
+	virtual std::string get_exercise_input() const = 0;
 
   protected:
+	//! \brief Return a reference to the current exercise.
+	virtual Exercise& get_exercise() = 0;
+
 	//! \brief Return the InStream the lesson is connected to.
 	InStream& in();
 	
