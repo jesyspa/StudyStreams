@@ -9,5 +9,6 @@ compile and link main.cpp, loader.cpp, and lib/libstudy.a .
 To build with debug information, run:
 	scons lib/libdbgstudy.a
 
-After that, link to lib/libdbgstudy.a .
+After that, build lesson.cpp and main.cpp files in a lesson and link them
+together with lib/libdbgstudy.a .
 
