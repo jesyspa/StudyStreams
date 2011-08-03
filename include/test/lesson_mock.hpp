@@ -17,7 +17,20 @@ class LessonMock :
 		log().set_prefix("[ ");
 	}
 	void welcome() {}
-	void part() {}
+	void end_exercise(std::string const& answer)
+	{
+		Exercise& e = get_exercise();
+		e.submit(answer);
+		if (e.result_is(Exercise::State::success)) {
+			log() << "S";
+		} else { // Assuming exercises always succeed or fail.
+			log() << "F";
+		}
+	}
+
+	void part() {
+		log() << study::endl;
+	}
 
 	//! \brief Add an exercise that expects a certain input.
 	void expect(std::string const& s)

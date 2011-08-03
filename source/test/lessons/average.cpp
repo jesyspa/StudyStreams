@@ -6,13 +6,13 @@
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
 #include "study/lessoninterface.hpp"
-#include "study/linearlesson.hpp"
+#include "test/lesson_mock.hpp"
 #include "study/io.hpp"
 
 using namespace study;
 
 class AverageTest :
-	public LinearLesson
+	public LessonMock
 {
   public:
 	void construct()
@@ -43,19 +43,6 @@ class AverageTest :
 		}
 		std::cout << std::endl;
 	}
-	void welcome() {}
-	void start_exercise() {}
-	void end_exercise() {
-		Exercise& e = get_exercise();
-		if (e.result_is(Exercise::State::success))
-			log() << "S";
-		else
-			log() << "F";
-	}
-	void part() {
-		log() << study::endl;
-	}
-	void destruct() {}
 };
 
 TEST(AverageTest, Check)

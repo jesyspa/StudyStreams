@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 #include <sstream>
 #include "study/lessoninterface.hpp"
-#include "study/linearlesson.hpp"
+#include "test/lesson_mock.hpp"
 #include "study/io.hpp"
 
 using namespace study;
 
 class StagesTest :
-	public LinearLesson
+	public LessonMock
 {
   public:
 	StagesTest(unsigned int i) : i_(i) {}
@@ -21,7 +21,7 @@ class StagesTest :
 	}
 	void welcome() { log() << "W"; }
 	void start_exercise() { log() << "S"; }
-	void end_exercise() { log() << "E"; }
+	void end_exercise(std::string const&) { log() << "E"; }
 	void part() { log() << "P"; }
 	void destruct() { log() << "D" << study::endl; }
 
