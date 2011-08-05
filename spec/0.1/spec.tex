@@ -13,6 +13,13 @@
 		the \textbf{lesson} that is written by the \textbf{tutor}.  These
 		streams use the \texttt{std::istream} and \texttt{std::ostream}
 		interfaces, which allow them to behave like standard streams.
+		
+		\begin{quote}
+			\emph{Note:} Unless specified otherwise, all classes are
+			described from the perspective of a student:  \texttt{OutStream}
+			is a stream through which the solution passes the results of the
+			program, not through which the lesson outputs questions.
+		\end{quote}
 
 		A typical lesson consists of some sort of welcome, a number of
 		exercises, and a parting message.  Most of the lesson structure is
@@ -39,12 +46,13 @@
 			\begin{itemize}
 				\item A config, build and install script for the static library.
 				\item An implementation that is capable of running all currently
-					available lessons.
+					available lessons.\footnote{Potentially running -- this just
+					refers to the \texttt{study} library, not to a build system.}
 				\item At least 15 lessons of various difficulty.
 				\item A system for easy compilation of lessons.
 				\item Operational lesson-input, lesson-output, and debug streams.
 			\end{itemize}
-		
+
 	\chapter{Usage Examples}
 		In order to illustrate the nature of StudyStreams a little better,
 		this section provides some situations in which they can come in handy.
@@ -55,7 +63,7 @@
 			Alice is an engineer in a small company producing intelligent
 			toasters.  The last programmer has recently mysteriously
 			disappeared, and now she has to quickly brush up her C++ in
-			order to fix an critical bug that caused the products to grow
+			order to fix a critical bug that caused the products to grow
 			legs.  Having no time to make herself a proper study schedule,
 			she instead downloads StudyStreams and starts doing the exercises,
 			while keeping a careful watch out for fiendish kitchen apparatus.
@@ -91,9 +99,155 @@
 		\end{itemize}
 
 	\chapter{Lesson Interface}
-		The primary interface for the creation of lessons is the \texttt{Lesson} class.
-		\footnote{In the past, this was called the \texttt{LessonLoader}.} This class
-		should be publically inherited from, and the following functions may be
-		overriden in order to provide the desired functionality.
+		\section{\texttt{Lesson}}
+		The primary tool for the creation of lessons is the \texttt{Lesson} class.
+		\footnote{In the past, this was called the \texttt{LessonLoader}.} An instance
+		of a subclass of this class (called \texttt{lesson} from here on) is
+		\texttt{new}ed, and then the pointer passed to a \texttt{LessonInterface}
+		instance (called \texttt{interface} from here on).  The \texttt{interface} takes
+		ownership of the \texttt{lesson}, and calls the appropriate functions as the
+		student's program gives output.  These functions must be overriden.
+		In addition to that, several others may be overriden, but need not be.  Here follows
+		a list of both, with optionally overridable functions marked as such.
+		\begin{description}
+			\item[\texttt{void construct()}] \hfill \\
+				Should create the exercises.  Called once, and is first function
+				that is called on the \texttt{Lesson} object.
+
+			\item[\texttt{void jump\_to\_first()}] \hfill \\
+				Should set the current exercise to whatever the lesson should
+				start with.  Called once, immediately after \texttt{construct}.
+
+			\item[\texttt{void welcome()} \textit{optional}] \hfill \\
+				Should display whatever information the writer of the lesson
+				happens to want to display.  Called once, immediately after
+				\texttt{jump\_to\_first}.
+
+			\item[\texttt{void start\_exercise()} \textit{optional}] \hfill \\
+				Should do whatever needs to be done when an exercise starts.  This
+				does \emph{not} involve setting the input of the current exercise:
+				that part is handled separately.  Called at the beginning of every
+				exercise.
+
+			\item[\texttt{void end\_exercise(std:string const\& answer)} \textit{optional}] \hfill \\
+				Should check whether the answer is correct, and react accordingly.
+				This function may eventually be split out into several, as
+				checking the answer is a common task.  If you want to prepare for
+				the future, put the checking logic in
+				\texttt{void check\_answer(std::string const\& answer)}.  Called at
+				the end of every exercise.
+
+			\item[\texttt{void next\_exercise()}] \hfill \\
+				Should advance to the next exercise.  No need to pass the input,
+				that will be done separately.  Called after \texttt{end\_exercise}.
+
+			\item[\texttt{void part()} \textit{optional}] \hfill \\
+				Should display some sort of parting message.  The opposite of
+				welcome.  Called after all exercises have been completed (when
+				\texttt{exercise\_is\_valid} returns false).  The opposite of
+				\texttt{welcome}.
+
+			\item[\texttt{void destruct()} \textit{optional}] \hfill \\
+				Should do whatever cleanup is required.  Called when the
+				\texttt{LessonInterface} is destroyed.  This function is
+				guaranteed to be called.  Should \emph{not} throw any exceptions.
+
+			\item[\texttt{bool exercise\_is\_valid()}] \hfill \\
+				Should return true if the current exercise is a valid exercise.
+				Used to check whether the last exercise is reached yet.  May be
+				called at any moment.
+
+			\item[\texttt{std::string get\_exercise\_input()}] \hfill \\
+				Should return the input that the current exercise wishes to be
+				passed to the user.  May be called at any moment.
+
+			\item[\texttt{Exercise\& get\_exercise()}] \hfill \\
+				Should return the current exercise.  This function should be
+				protected.  May be called at any moment.
+		\end{description}
+		\subsection{Streams}
+		The \texttt{Lesson} class provides functions that return references to
+		the three streams the \texttt{LessonInterface} is currently using.  These
+		functions are for the teacher to use as necessary -- however, in simple
+		cases, only the \texttt{log()} function is required;  it returns a
+		LogStream reference, which should be used for any output intended to go
+		to the screen.
+
+		The functions that retrieve these streams are \texttt{in()}, \texttt{out()},
+		and \texttt{log()}, for the InStream, OutStream, and LogStream respectively.
+
+		\section{\texttt{LinearLesson}}
+		As can be seen, the \texttt{Lesson} class provides a lot of control over
+		what goes on.  However, a large part of this control is not necessary for
+		most lessons, and a second class, deriving from \texttt{Lesson}, is
+		provided by default:  this is \texttt{LinearLesson} which is suitable
+		for most lessons where the exercises are generated at the beginning, and
+		have a constant order.  If you choose to use \texttt{LinearLesson}, the
+		following functions are changed.
+		\begin{description}
+			\item[\texttt{void jump\_to\_first()}] \hfill \\
+				Provided by \texttt{LinearLesson}, overriding not advised.
+
+			\item[\texttt{void next\_exercise()}] \hfill \\
+				Provided by \texttt{LinearLesson}, overriding not advised.
+
+			\item[\texttt{bool exercise\_is\_valid()}] \hfill \\
+				Provided by \texttt{LinearLesson}.
+
+			\item[\texttt{std::string get\_exercise\_input()}] \hfill \\
+				Provided by \texttt{LinearLesson}.
+
+			\item[\texttt{Exercise\& get\_exercise()}] \hfill \\
+				Provided by \texttt{LinearLesson}, overriding not advised.
+			
+			\item[\texttt{void add\_exercise(Exercise* e)}] \hfill \\
+				Provided by \texttt{LinearLesson}, in order to add exercises
+				to the list.  Will add to the end of the list.  May not be
+				overridden (not virtual).
+		\end{description}
+
+		\section{\texttt{Exercise}}
+		A single lesson is generally built up of several exercises, which the
+		solution must give correct answers to in order to successfully pass
+		the lesson.  An object of the \texttt{Exercise} class should be used
+		in order to represent such a single exercise.  The \texttt{lesson}
+		should handle the storage of exercises internally;  \texttt{LinearLesson}
+		will do this automatically.
+
+		By default, \texttt{Exercise} stores four key parts:  the name of the
+		exercise, the input that is to be given to the user, the output to
+		expect, and a function pointer to the function to compare the two with.
+		The function must take two \texttt{std::string const&}, and return a
+		\texttt{bool} -- true if they are equal, and false otherwise.
+
+		The constructor of \texttt{Exercise} may be used with keyword parameters;
+		this is done in the form of \texttt{Exercise(\_input="ABCD", \_answer="DCBA")}.
+		The documentation of \texttt{Exercise} should have more details on the
+		syntax.
+
+		\texttt{Exercise} should be possible to use polymorphically, although
+		the only function that is virtual is the destructor.
+
 	\chapter{Solution Interface}
+		A solution is a C++ program that uses \texttt{study::cin} for input and
+		\texttt{study::cout} for output, and follows the guidelines provided by
+		the teacher in order to process the input and give the expected output.
+		StudyStreams is specifically designed to resemble standard terminal
+		input and output:  by not including \texttt{study.hpp}, and adding
+		\texttt{namespace study = std;} to the beginning of the program, it
+		should be possible to provide the input and output manually, although
+		the extra output provided by the lesson would not be present.
+
+		Usually, a lesson will specify that it will give a series of input that
+		ends with a certain string or number, and will then expect some sort of
+		output.  It is usually important to provide the output as soon as
+		possible:  exercises are intended to not run into each other, and so it
+		is not possible, in the case of most lessons, to get input from all
+		exercises, and then submit it one by one.  This is by design:  a bug
+		that causes one exercise to take too much input should not affect the
+		rest.
+
+		\section{InStream}
+		The environment will provide a \texttt{study::cin} object that behaves
+		like an instream, and feeds input from the lesson.  
 \end{document}

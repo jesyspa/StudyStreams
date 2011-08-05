@@ -26,10 +26,10 @@ class LinearLesson :
 	//! \brief Return true if the current exercise is valid/present.
 	//!
 	//! Intended to check whether we are at the last exercise or not.
-	virtual bool exercise_is_valid() const;
+	virtual bool exercise_is_valid();
 
 	//! \brief Get the input of the current exercise.
-	virtual std::string get_exercise_input() const;
+	virtual std::string get_exercise_input();
 
   protected:
 	//! \brief Return a reference to the current exercise.

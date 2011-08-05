@@ -14,12 +14,12 @@ void LinearLesson::next_exercise()
 	++current_exercise_;
 }
 
-bool LinearLesson::exercise_is_valid() const
+bool LinearLesson::exercise_is_valid()
 {
 	return current_exercise_ != exercise_list_.end();
 }
 
-std::string LinearLesson::get_exercise_input() const
+std::string LinearLesson::get_exercise_input() 
 {
 	assert(exercise_is_valid());
 	return current_exercise_->get_input();

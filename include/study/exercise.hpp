@@ -92,7 +92,7 @@ class Exercise
 			(compare, *)
 		)
 	)
-	~Exercise() {}
+	virtual ~Exercise() {}
 
 	//! \brief Set the name of the exercise.
 	Exercise& set_name(std::string const& name);
