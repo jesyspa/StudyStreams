@@ -93,6 +93,18 @@ inline bool state_has_only(T state, T flags)
 	return (state & ~flags) != T::empty;
 }
 
+template<typename T>
+inline T set(T state, T flags)
+{
+	return state | flags;
+}
+
+template<typename T>
+inline T unset(T state, T flags)
+{
+	return state & ~flags;
+}
+
 } // namespace study
 
 #endif // INCLUDE_STUDY_ENUMUTILS_HPP

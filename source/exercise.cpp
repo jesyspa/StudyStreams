@@ -33,13 +33,13 @@ std::string const& Exercise::get_name() const
 	return name_;
 }
 
-std::string const& Exercise::get_answer() const
+std::string Exercise::get_answer() const
 {
 	assert(this);
 	return answer_;
 }
 
-std::string const& Exercise::get_input() const
+std::string Exercise::get_input() const
 {
 	assert(this);
 	return input_;
@@ -97,6 +97,17 @@ bool Exercise::result_is_exactly(Exercise::State st) const
 	return state_has_all(state_, st) && state_has_only(state_, st);
 }
 
+void Exercise::set_result(Exercise::State st)
+{
+	assert(this);
+	state_ = set(state_, st);
+}
+
+void Exercise::unset_result(Exercise::State st)
+{
+	assert(this);
+	state_ = unset(state_, st);
+}
 
 } // namespace study
 

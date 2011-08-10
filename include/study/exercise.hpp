@@ -2,7 +2,6 @@
 #define INCLUDE_STUDY_EXERCISE_HPP
 
 #include <string>
-#include <iostream> // DBG
 #include <boost/parameter/keyword.hpp>
 #include <boost/parameter/name.hpp>
 #include <boost/parameter/preprocessor.hpp>
@@ -52,15 +51,31 @@ struct Exercise_Impl
 	std::string answer_;
 	std::string input_;
 	compare_func compare_;
+  protected:
+	Exercise_Impl() {} // Works according to the testcase.  http://ideone.com/i0Far
 };
 
+//! \brief Declare and define a parameter-based constructor.
+//!
+//! Make sure to virtually and privately inherit Exercise_Impl, and
+//! publically inherit Exercise.
+//! \param[in]ExerciseTypeName is the name of your Exercise subclass.
+#define STUDY_EXERCISETYPE_CONSTRUCTOR(ExerciseTypeName) \
+	BOOST_PARAMETER_CONSTRUCTOR( \
+		ExerciseTypeName, \
+		(::study::Exercise_Impl), \
+		::study::keywords::tag, \
+		(required (name, *)) \
+		(optional \
+			(answer, *) \
+			(input, *) \
+			(compare, *) \
+		) \
+	)
 
 //! \brief Represents an exercise in a lesson.
-//!
-//! Only used internally: you should not encounter this class when creating
-//! or solving exercises.
-class Exercise
-	: Exercise_Impl
+class Exercise :
+	virtual Exercise_Impl
 {
   public:
 	using Exercise_Impl::State;
@@ -81,36 +96,29 @@ class Exercise
 	//! \param[in] answer is the reply from the user that would be correct.
 	//! \param[in] compare is the function to use to compare the expected and
 	//!            given answer.
-	BOOST_PARAMETER_CONSTRUCTOR(
-		Exercise,
-		(Exercise_Impl),
-		keywords::tag,
-		(required (name, *))
-		(optional
-			(answer, *)
-			(input, *)
-			(compare, *)
-		)
-	)
+	STUDY_EXERCISETYPE_CONSTRUCTOR(Exercise) // No ; !
+  protected:
+	Exercise() {} // Necessary for subclasses with parameter constructors to work.
+  public:
 	virtual ~Exercise() {}
 
 	//! \brief Set the name of the exercise.
-	Exercise& set_name(std::string const& name);
+	virtual Exercise& set_name(std::string const& name);
 	//! \brief Set the answer to the exercise.
-	Exercise& set_answer(std::string const& answer);
+	virtual Exercise& set_answer(std::string const& answer);
 	//! \brief Set the input passed by the exercise.
-	Exercise& set_input(std::string const& input);
+	virtual Exercise& set_input(std::string const& input);
 	//! \brief Dummy function, used to make code more readable.
-	Exercise& and_() { return *this; }
+	virtual Exercise& and_() { return *this; }
 
 	//! \brief Get the name of the exercise.
-	std::string const& get_name() const;
+	virtual std::string const& get_name() const;
 	//! \brief Get the answer to the exercise.
-	std::string const& get_answer() const;
+	virtual std::string get_answer() const;
 	//! \brief Get the input passed by the exercise.
-	std::string const& get_input() const;
+	virtual std::string get_input() const;
 	//! \brief Get the actual answer recieved.
-	std::string const& get_user_answer() const;
+	virtual std::string const& get_user_answer() const;
 	
 	//! \brief Reset the exercise, removing the answer given.
 	//!
@@ -120,10 +128,10 @@ class Exercise
 	//! \brief Append a string to the input.
 	//!
 	//! Whitespace is inserted between the old and new input.
-	Exercise& append_input(std::string const& input);
+	virtual Exercise& append_input(std::string const& input);
 	
 	//! \brief Submit the answer.
-	Exercise& submit(std::string const& user_answer);
+	virtual Exercise& submit(std::string const& user_answer);
 
 	//! \brief Check whether the result has a certain flag set.
 	//!
@@ -144,6 +152,13 @@ class Exercise
 	//!
 	//! Assuming ORed flags, check whether only these flags are set.
 	bool result_is_exactly(Exercise::State st) const;
+
+  protected:
+	//! \brief Mark all bits in st as set.
+	void set_result(Exercise::State st);
+	
+	//! \brief Mark all bits in st as unset.
+	void unset_result(Exercise::State st);
 
   private:
 	std::string user_answer_;

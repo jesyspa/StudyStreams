@@ -1,0 +1,12 @@
+Hello World
+Even-or-odd
+Concatenation of strings
+Addition of multiple integers
+Reversal of string
+Average of multiple integers
+Factorial
+Fibonnaci
+Generation of primes
+Parsing of simple mathematical expressions
+Parsing of S-expressions
+Validation of input

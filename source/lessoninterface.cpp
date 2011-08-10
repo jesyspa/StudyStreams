@@ -73,5 +73,26 @@ LessonInterface& LessonInterface::submit(std::string const& answer)
 	return *this;
 }
 
+InStream& LessonInterface::in()
+{
+	assert(this);
+	assert(in_);
+	return *in_;
+}
+
+OutStream& LessonInterface::out()
+{
+	assert(this);
+	assert(out_);
+	return *out_;
+}
+
+LogStream& LessonInterface::log()
+{
+	assert(this);
+	assert(log_);
+	return *log_;
+}
+
 } // namespace study
 

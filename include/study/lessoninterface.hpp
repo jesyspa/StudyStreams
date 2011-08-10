@@ -21,8 +21,6 @@ class Lesson;
 //! Virtual for mocking reasons.
 class LessonInterface
 {
-	//! \brief Iterator for Exercises in the LessonInterface.
-	friend class Lesson;
   public:
 	//! \brief Initialise the LessonInterface.
 	//!
@@ -53,6 +51,21 @@ class LessonInterface
 	//!
 	//! \param[in] answer is the answer given to the question.
 	LessonInterface& submit(std::string const& answer);
+
+	//! \brief Return the InStream associated with the lesson.
+	//!
+	//! If no stream is associated, the behaviour is undefined.
+	InStream& in();
+
+	//! \brief Return the OutStream associated with the lesson.
+	//!
+	//! If no stream is associated, the behaviour is undefined.
+	OutStream& out();
+
+	//! \brief Return the instream associated with the lesson.
+	//!
+	//! If no stream is associated, the behaviour is undefined.
+	LogStream& log();
 
   private:
 	boost::scoped_ptr<Lesson> lesson_;
