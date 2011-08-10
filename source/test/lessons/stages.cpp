@@ -17,7 +17,7 @@ class StagesTest :
 		log().set_prefix("");
 		log() << "C";
 		for (unsigned int i = 0; i < i_; ++i)
-			add_exercise(new Exercise(""));
+			add_exercise(new Exercise);
 	}
 	void welcome() { log() << "W"; }
 	void start_exercise() { log() << "S"; }

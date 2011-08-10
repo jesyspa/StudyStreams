@@ -1,6 +1,7 @@
 #ifndef INCLUDE_STUDY_LESSON_HPP
 #define INCLUDE_STUDY_LESSON_HPP
 
+#include <boost/utility.hpp>
 #include "study/exercise.hpp"
 
 namespace study
@@ -15,7 +16,8 @@ class InStream;
 //!
 //! Responsible for creating and storing the exercises and providing the
 //! user with information on what is going on.
-class Lesson
+class Lesson :
+	boost::noncopyable
 {
   public:
 	virtual ~Lesson() {}

@@ -29,7 +29,7 @@ class AverageTest :
 		for (unsigned int i = 0; i < 4; ++i) {
 			int j = roll();
 			int sum = 0;
-			Exercise* e = new Exercise(boost::lexical_cast<std::string>(i));
+			Exercise* e = &(new Exercise)->set_name(boost::lexical_cast<std::string>(i));
 			std::cout << "[ ";
 			for (int k = 0; k < j; ++k) {
 				int h = roll();

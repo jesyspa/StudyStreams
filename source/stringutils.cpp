@@ -1,4 +1,6 @@
 #include "study/stringutils.hpp"
+#include <cmath>
+#include <limits>
 #include <iterator>
 #include <list>
 #include <string>
@@ -68,6 +70,27 @@ bool whitespace_ignore_compare( // TODO
 	std::string const& /*expected*/)
 {
 	return false;
+}
+
+bool float_compare(
+	std::string const& answer,
+	std::string const& actual
+)
+{
+	std::stringstream ans(answer), act(actual);
+	double n, c;
+	while (ans >> n) {
+		if (!(act >> c)) {
+			return false;
+		}
+		if (fabs(n - c) > std::numeric_limits<double>::epsilon() * 16 * fmax(fabs(n), fabs(c))) { // Make sure the two aren't too far apart.
+			return false;
+		}
+	}
+	if ((act >> c)) {
+		return false;
+	}
+	return true;
 }
 
 } // namespace study

@@ -19,7 +19,8 @@ class Lesson;
 //! data through study::cin and monitors the output through study::cout.  
 //!
 //! Virtual for mocking reasons.
-class LessonInterface
+class LessonInterface :
+	boost::noncopyable
 {
   public:
 	//! \brief Initialise the LessonInterface.

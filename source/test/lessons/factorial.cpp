@@ -14,17 +14,17 @@ using namespace study;
 namespace
 {
 
-unsigned int fibo(unsigned int i)
+unsigned int fact(unsigned int i)
 {
 	if (i < 2)
-		return i;
+		return 1;
 	else
-		return fibo(i-1) + fibo(i-2);
+		return i * fact(i-1);
 }
 
 } // namespace
 
-class FibonacciTest :
+class FactorialTest :
 	public LessonMock
 {
   public:
@@ -33,7 +33,7 @@ class FibonacciTest :
 		log().set_prefix("");
 		boost::mt19937 gen;
 		gen.seed(std::time(0));
-		boost::uniform_int<> dist(1,16);
+		boost::uniform_int<> dist(0,8);
 		boost::variate_generator<
 			boost::mt19937&,
 			boost::uniform_int<>
@@ -42,28 +42,28 @@ class FibonacciTest :
 		for (unsigned int i = 0; i < 4; ++i) {
 			int j = roll();
 			std::cout << j << ' ';
-			add_exercise(new Exercise(
-				boost::lexical_cast<std::string>(j),
-				boost::lexical_cast<std::string>(fibo(j)),
-				boost::lexical_cast<std::string>(j))
+			add_exercise(&(new Exercise)->
+				set_input(boost::lexical_cast<std::string>(j)).
+				set_answer(boost::lexical_cast<std::string>(fact(j))).
+				set_compare(float_compare)
 			);
 		}
 		std::cout << std::endl;
 	}
 };
 
-TEST(FibonacciTest, Check)
+TEST(FactorialTest, Check)
 {
 	std::stringstream ss;
 	InStream in;
 	LogStream log(ss);
 	OutStream out;
 	{
-		LessonInterface lesson(new FibonacciTest, in, log, out);
+		LessonInterface lesson(new FactorialTest, in, log, out);
 		while (lesson) {
 			int i;
 			EXPECT_TRUE(in >> i);
-			out << fibo(i) << endl;
+			out << fact(i) << endl;
 		}
 	}
 	EXPECT_EQ("SSSS\n", ss.str());

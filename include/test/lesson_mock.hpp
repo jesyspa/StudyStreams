@@ -35,8 +35,8 @@ class LessonMock :
 	//! \brief Add an exercise that expects a certain input.
 	void expect(std::string const& s)
 	{
-		using namespace keywords;
-		add_exercise(new Exercise("1", _answer=s));
+		// Magically adds some details, then takes the address of the last returned.
+		add_exercise(&(new Exercise())->set_name("1").set_answer(s));
 	}
 };
 

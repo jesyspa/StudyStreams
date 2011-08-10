@@ -6,48 +6,57 @@
 namespace study
 {
 
+Exercise::Exercise(compare_func compare) :
+	state_(State::noinput),
+	compare_(compare)
+{}
+
 Exercise& Exercise::set_name(std::string const& name)
 {
-	assert(this);
 	name_ = name;
 	return *this;
 }
 
 Exercise& Exercise::set_answer(std::string const& answer)
 {
-	assert(this);
 	answer_ = answer;
 	return *this;
 }
 
 Exercise& Exercise::set_input(std::string const& input)
 {
-	assert(this);
 	input_ = input;
+	return *this;
+}
+
+Exercise& Exercise::set_compare(compare_func compare)
+{
+	compare_ = compare;
 	return *this;
 }
 
 std::string const& Exercise::get_name() const
 {
-	assert(this);
 	return name_;
 }
 
 std::string Exercise::get_answer() const
 {
-	assert(this);
 	return answer_;
 }
 
 std::string Exercise::get_input() const
 {
-	assert(this);
 	return input_;
+}
+
+Exercise::compare_func Exercise::get_compare()
+{
+	return compare_;
 }
 
 std::string const& Exercise::get_user_answer() const
 {
-	assert(this);
 	return user_answer_;
 }
 

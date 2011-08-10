@@ -17,15 +17,9 @@ namespace study
 //! mean that the student will have to have some way of not reading too
 //! far, or it will seem like the lesson is over too early.
 class GuardedExercise :
-	virtual Exercise_Impl,
 	public Exercise
 {
   public:
-	//! \brief Create a GuardedExercise.
-	//!
-	//! See the documentation of the constructor Exercise for details.
-	STUDY_EXERCISETYPE_CONSTRUCTOR(GuardedExercise) // No ; !
-
 	//! \brief Get the input passed by the exercise.
 	virtual std::string get_input() const;
 };

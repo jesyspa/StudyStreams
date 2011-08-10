@@ -7,37 +7,13 @@ using namespace study;
 
 TEST(Exercise, MinimumConstructor)
 {
-	Exercise e("Nameless");
-}
-
-TEST(Exercise, FullConstructor)
-{
-	Exercise e(
-		"Test",
-		"Some question.",
-		"Some answer.",
-		whitespace_ignore_compare
-	);
-}
-
-TEST(Exercise, NamedParamatersConstructor)
-{
-	using namespace keywords;
-	Exercise e(
-		_compare=whitespace_ignore_compare,
-		_name="Test",
-		_answer="Some answer.",
-		_input="Some question."
-	);
+	Exercise e;
 }
 
 TEST(Exercise, Result)
 {
-	using namespace keywords;
-	Exercise e(
-		"Unnamed",
-		_answer="ABCD"
-	);
+	Exercise e;
+	e.set_name("Unnamed").set_answer("ABCD");
 	EXPECT_TRUE(e.result_is(Exercise::State::noinput))
 		<< "Exercise marked as having been tried.";
 	e.submit("ABCD");

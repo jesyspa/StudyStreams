@@ -34,13 +34,11 @@ OutStream& Lesson::out()
 
 void Lesson::welcome()
 {
-	assert(this);
 	log() << "------ Start Lesson ------\n" << study::endl;
 }
 
 void Lesson::start_exercise()
 {
-	assert(this);
 }
 
 void Lesson::end_exercise(std::string const& answer)
