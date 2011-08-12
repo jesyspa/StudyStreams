@@ -1,26 +1,24 @@
-#include "study/lessoninterface.hpp"
-#include "study/linearlesson.hpp"
+#include <study/lessoninterface.hpp>
+#include <study/linearlesson.hpp>
+#include <study/stringutils.hpp>
 
 using namespace study;
-using namespace study::keywords;
 
 struct HelloWorldLesson :
 	LinearLesson
 {
-
 	void construct()
 	{
 		log().set_prefix("--| ");
 		Exercise* e;
-		e = new Exercise(
-			"[Demonstration]",
-			_answer="Hello world!"
-		);
+		e = &(new Exercise)->
+			set_name("[Demonstration]").
+			set_answer("Hello world!")
 		add_exercise(e);
-		e = new Exercise(
-			"[Reality]",
-			_answer="Hello universe!"
-		);
+		e = &(new Exercise)->
+			set_name("[Reality]").
+			set_answer("Hello universe!").
+			set_compare(loose_compare)
 		add_exercise(e);
 	}
 
@@ -33,7 +31,7 @@ struct HelloWorldLesson :
 
 	void part()
 	{
-		log() << "End of exercise." << study::endl;
+		log() << "End of lesson." << study::endl;
 	}
 
 };

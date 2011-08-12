@@ -34,6 +34,16 @@ bool simple_compare(
 	std::string const& actual
 );
 
+//! \brief Literal comparison.
+//!
+//! \param[in] answer is the answer expected.
+//! \param[in] actual is the answer given.
+//! \return Return true if strings are judged to be equal.
+bool loose_compare(
+	std::string const& answer,
+	std::string const& actual
+);
+
 //! \brief Comparison that ignores whitespace.
 //!
 //! \warning Not implemented.
@@ -46,8 +56,12 @@ bool whitespace_ignore_compare(
 	std::string const& actual
 );
 
-//! \brief Comparison that treats the two streams as streams of floats.
+//! \brief Comparison that treats the two strings as streams of floats.
 //!
+//! As always with float comparisons, things may not work as expected, and
+//! there has been no testing with generated values.  Please report any unexpected
+//! results!
+//! 
 //! \param[in] answer is the answer expected.
 //! \param[in] actual is the answer given.
 //! \return Return true if strings are judged to be equal.
