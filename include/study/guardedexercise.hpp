@@ -16,6 +16,8 @@ namespace study
 //! every exercise, this class will keep it valid.  However, this does
 //! mean that the student will have to have some way of not reading too
 //! far, or it will seem like the lesson is over too early.
+//!
+//! \deprechated This type of exercise is not needed with Solution #4.
 class GuardedExercise :
 	public Exercise
 {
