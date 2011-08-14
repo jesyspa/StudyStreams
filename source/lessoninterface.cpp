@@ -18,59 +18,49 @@ LessonInterface::LessonInterface(
 	out_(&outs)
 {
 	assert(lesson_);
-	out_->set_interface(*this);
+	out_->claim();
 	lesson_->set_interface(*this);
 	lesson_->construct();
-	lesson_->jump_to_first();
-	lesson_->welcome();
-	if (*this) {
-		lesson_->start_exercise();
-		in_->set_input(lesson_->get_exercise_input());
-	} else {
-		lesson_->part();
-	}
 }
 
 LessonInterface::~LessonInterface()
 {
 	assert(lesson_);
-	try {
+	try
+	{
 		lesson_->destruct();
+		out().release();
 	}
-	catch (...) {
+	catch (...)
+	{
 		std::cerr << "Exception thrown in LessonInterface::~LessonInterface.  "
 			<< "Please report this.\n";
 		assert(0);
 	}
 }
 
-LessonInterface::operator bool() const
+void LessonInterface::run()
 {
+	// - Check that all necessary pointers are set.
+	// - Make sure the lesson is at its beginning.
+	// - Greet the user
+	// - Run all exercises (greeting, running, checking, parting, moving on)
+	// - Say good-bye to the user
 	assert(this);
 	assert(lesson_);
-	return lesson_->exercise_is_valid();
-}
-
-bool LessonInterface::operator!() const
-{
-	assert(this);
-	assert(lesson_);
-	return !lesson_->exercise_is_valid();
-}
-
-LessonInterface& LessonInterface::submit(std::string const& answer)
-{
-	assert(this);
-	assert(lesson_);
-	lesson_->end_exercise(answer);
-	lesson_->next_exercise();
-	if (*this) {
-		lesson_->start_exercise();
-		in_->set_input(lesson_->get_exercise_input());
-	} else {
-		lesson_->part();
-	}
-	return *this;
+	lesson_->jump_to_first();
+	lesson_->welcome(); // Global greeting text
+	while (lesson_->exercise_is_valid())
+	{
+		lesson_->start_exercise(); // Per-exercise greeting text
+		in().set_input(lesson_->get_exercise_input());
+		auto args = lesson_->get_exercise_args();
+		int ret = lesson_->solution(args.size(), args.data()); // Actual work
+		lesson_->end_exercise(ret, out().retrieve()); // Per-exercise parting text
+		out().reset();
+		lesson_->next_exercise();
+	} 
+	lesson_->part(); // Parting text
 }
 
 InStream& LessonInterface::in()

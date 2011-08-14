@@ -14,3 +14,4 @@ TEST(StringUtils, FloatCompare)
 	EXPECT_FALSE(float_compare("0 3.5", "0 3.5 7"));
 	EXPECT_FALSE(float_compare("0 3.5 7", "0 3.5"));
 }
+

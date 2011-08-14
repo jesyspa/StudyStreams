@@ -17,8 +17,6 @@ class Lesson;
 //!
 //! Each program written by a student should have a LessonInterface object that feeds
 //! data through study::cin and monitors the output through study::cout.  
-//!
-//! Virtual for mocking reasons.
 class LessonInterface :
 	boost::noncopyable
 {
@@ -40,18 +38,10 @@ class LessonInterface :
 	);
 	~LessonInterface();
 	
-	//! \brief Return true if there are more exercises.
-	operator bool() const;
-	
-	//! \brief Return true if there are no more exercises.
-	bool operator!() const;
-
-	//! \brief Submit a string as the final answer to the question.
+	//! \brief Begin the lesson.
 	//!
-	//! Do not use externally -- OutStreams are designed to hide this.
-	//!
-	//! \param[in] answer is the answer given to the question.
-	LessonInterface& submit(std::string const& answer);
+	//! Will run all exercises.
+	void run();
 
 	//! \brief Return the InStream associated with the lesson.
 	//!

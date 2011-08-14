@@ -6,33 +6,48 @@ namespace study
 {
 
 OutStream::OutStream() :
-	lesson_(0)
+	used_(false)
 {
 }
 
-OutStream::OutStream(LessonInterface& lesson) :
-	lesson_(&lesson)
-{
-}
-
-OutStream::~OutStream() {}
-
-OutStream& OutStream::set_interface(LessonInterface& lesson)
+OutStream& OutStream::reset()
 {
 	assert(this);
-	lesson_ = &lesson;
+	oss_.str("");
+	oss_.clear();
 	return *this;
 }
 
-bool OutStream::has_lesson() const
+std::string OutStream::retrieve() const
 {
 	assert(this);
-	return lesson_;
+	return oss_.str();
+}
+
+OutStream& OutStream::claim()
+{
+	assert(this);
+	used_ = true;
+	return *this;
+}
+
+OutStream& OutStream::release()
+{
+	assert(this);
+	used_ = false;
+	return *this;
+}
+
+bool OutStream::claimed() const
+{
+	assert(this);
+	return used_;
 }
 
 OutStream& OutStream::operator<<(EndLine const& /*value*/)
 {
 	assert(this);
+	*this << '\n';
 	flush();
 	return *this;
 }
@@ -51,13 +66,10 @@ OutStream& OutStream::write(char const* s, size_t count)
 	return *this;
 }
 
+// Currently does absolutely nothing.
 OutStream& OutStream::flush()
 {
 	assert(this);
-	assert(lesson_);
-	lesson_->submit(oss_.str());
-	oss_.str("");
-	oss_.clear();
 	return *this;
 }
 

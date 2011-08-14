@@ -11,6 +11,9 @@
 
 using namespace study;
 
+// Used in order to make it look more like a typical lesson.
+#define MAIN AverageTest::solution
+
 class AverageTest :
 	public LessonMock
 {
@@ -29,7 +32,7 @@ class AverageTest :
 		for (unsigned int i = 0; i < 4; ++i) {
 			int j = roll();
 			int sum = 0;
-			Exercise* e = &(new Exercise)->set_name(boost::lexical_cast<std::string>(i));
+			Exercise* e = new Exercise(boost::lexical_cast<std::string>(i));
 			std::cout << "[ ";
 			for (int k = 0; k < j; ++k) {
 				int h = roll();
@@ -38,12 +41,26 @@ class AverageTest :
 				e->append_input(boost::lexical_cast<std::string>(h));
 			}
 			e->set_answer(boost::lexical_cast<std::string>(sum/j));
+			e->set_compare(float_compare);
 			add_exercise(e);
 			std::cout << " ]\n";
 		}
 		std::cout << std::endl;
 	}
+
+	int solution(int argc, char* argv[]);
 };
+
+int MAIN(int /*argc*/, char* /*argv*/[])
+{
+	int count = 0, sum = 0, t;
+	while (in() >> t) {
+		count++;
+		sum += t;
+	}
+	out() << (sum / count) << endl;
+	return 0;
+}
 
 TEST(AverageTest, Check)
 {
@@ -53,14 +70,7 @@ TEST(AverageTest, Check)
 	OutStream out;
 	{
 		LessonInterface lesson(new AverageTest, in, log, out);
-		while (lesson) {
-			int count = 0, sum = 0, t;
-			while (in >> t) {
-				count++;
-				sum += t;
-			}
-			out << (sum / count) << endl;
-		}
+		lesson.run();
 	}
 	EXPECT_EQ("SSSS\n", ss.str());
 }

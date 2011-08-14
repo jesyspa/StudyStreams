@@ -22,8 +22,8 @@ struct EvenOrOddLesson :
 		Exercise* e;
 		for (size_t n = 0; n < 16; ++n) {
 			int j = roll();
-			add_exercise(&(new Exercise)->
-				set_name(boost::lexical_cast<std::string>(n)).
+			auto name = boost::lexical_cast<std::string(n);
+			add_exercise(&(new Exercise(name))->
 				set_input(boost::lexical_cast<std::string>(j)).
 				set_answer(j ? "Even" : "Odd").
 				set_compare(loose_compare)

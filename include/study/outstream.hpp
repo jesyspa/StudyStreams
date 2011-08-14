@@ -20,15 +20,22 @@ class OutStream :
 {
   public:
 	OutStream();
-	OutStream(LessonInterface& lesson);
-	~OutStream();
 
 	// Custom functions
-	//! \brief Associate the stream with a certain lesson.
-	OutStream& set_interface(LessonInterface& lesson);
+	//! \brief Reset stream to be empty.
+	OutStream& reset();
 
-	//! \brief Return true if stream is associated with a lesson.
-	bool has_lesson() const;
+	//! \brief Return the currently present input.
+	std::string retrieve() const;
+
+	//! \brief Set the OutStream to be used.
+	OutStream& claim();
+
+	//! \brief Set the OutStream to be not-used.
+	OutStream& release();
+
+	//! \brief Return true if the OutStream is set as used.
+	bool claimed() const;
 
 	// Standard formatted output
 	//! \brief Insert something into the stream.
@@ -37,6 +44,8 @@ class OutStream :
 	template<typename T>
 	OutStream& operator<<(T const& value);
 	//! \brief Overload to handle endlines (and, therefore, flushes).
+	//!
+	//! Simply adds a newline to the end of the input.
 	OutStream& operator<<(EndLine const& value);
 	
 	// Standard unformatted output
@@ -46,11 +55,11 @@ class OutStream :
 	OutStream& write(char const* s, size_t count);
 
 	// Misc standard
-	//! \brief Submit the answer.  Same as operator<<(Endline const&).
+	//! \brief No effect.
 	OutStream& flush();
 
   private:
-	LessonInterface* lesson_;
+	bool used_;
 	std::ostringstream oss_;
 };
 

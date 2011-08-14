@@ -41,7 +41,7 @@ void Lesson::start_exercise()
 {
 }
 
-void Lesson::end_exercise(std::string const& answer)
+void Lesson::end_exercise(int /*retval*/, std::string const& answer)
 {
 	assert(this);
 	Exercise& e = get_exercise();
@@ -68,6 +68,18 @@ void Lesson::part()
 void Lesson::destruct()
 {
 	assert(this);
+}
+
+std::string Lesson::get_exercise_input() 
+{
+	assert(exercise_is_valid());
+	return get_exercise().get_input();
+}
+
+std::vector<char*> Lesson::get_exercise_args()
+{
+	assert(exercise_is_valid());
+	return get_exercise().get_args();
 }
 
 } // namespace study

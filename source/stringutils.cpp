@@ -5,6 +5,7 @@
 #include <list>
 #include <string>
 #include <sstream>
+#include <boost/algorithm/string.hpp>
 #include <boost/tokenizer.hpp>
 #include <boost/foreach.hpp>
 
@@ -65,11 +66,31 @@ bool simple_compare(
 	return answer == actual;
 }
 
-bool whitespace_ignore_compare( // TODO
-	std::string const& /*answer*/,
-	std::string const& /*expected*/)
+bool loose_compare(
+	std::string const& answer,
+	std::string const& actual)
 {
-	return false;
+	using boost::to_lower;
+	std::string i_answer = answer;
+	std::string i_actual = actual;
+	to_lower(i_answer);
+	to_lower(i_actual);
+	return whitespace_ignore_compare(i_answer, i_answer);
+}
+
+bool whitespace_ignore_compare(
+	std::string const& answer,
+	std::string const& expected)
+{
+	boost::tokenizer<> answer_tok(answer);
+	boost::tokenizer<> expected_tok(expected);
+	auto answer_it = answer_tok.begin();
+	BOOST_FOREACH(std::string expected_str, expected_tok) {
+		if (expected_str != *answer_it)
+			return false;
+		++answer_it;
+	}
+	return answer_it == answer_tok.end(); // Check that answer is also finished
 }
 
 bool float_compare(
@@ -91,6 +112,14 @@ bool float_compare(
 		return false;
 	}
 	return true;
+}
+
+bool case_insensitive_compare(
+	std::string const& answer,
+	std::string const& expected)
+{
+	boost::algorithm::is_iequal i;
+	return i(answer, expected);
 }
 
 } // namespace study

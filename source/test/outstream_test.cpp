@@ -2,7 +2,6 @@
 #include <sstream>
 #include <gtest/gtest.h>
 #include "study/lessoninterface.hpp"
-#include "test/lesson_mock.hpp"
 #include "study/logstream.hpp"
 
 using namespace study;
@@ -10,29 +9,26 @@ using namespace study;
 TEST(OutStream, DefaultConstructor)
 {
 	OutStream out;
-	EXPECT_FALSE(out.has_lesson()) << "OutStream incorrectly marked as connected.";
+	EXPECT_FALSE(out.claimed()) << "OutStream incorrectly marked as claimed.";
 }
 
 TEST(OutStream, SetLessonInterface)
 {
 	OutStream out;
-	LessonMock* p = new LessonMock();
-	LessonInterface l(p);
-	EXPECT_EQ(&out.set_interface(l), &out) << "Fluid interface error.";
-	EXPECT_TRUE(out.has_lesson()) << "OutStream incorrectly marked as disconnceted.";
+	out.claim();
+	EXPECT_EQ(&out.claim(), &out) << "Fluid interface error.";
+	EXPECT_TRUE(out.claimed()) << "OutStream incorrectly marked as unclaimed.";
 }
 
 TEST(OutStream, PassInput)
 {
 	OutStream out;
-	LessonMock* p = new LessonMock();
-	p->expect("A B C 4 5");
-	LessonInterface l(p);
-	out.set_interface(l);
-	EXPECT_TRUE(out.has_lesson()) << "OutStream incorrectly marked as disconnceted.";
 	out << "A B C " << 4 << ' ' << 5 << endl;
+	EXPECT_EQ(out.retrieve(), "A B C 4 5\n");
 }
 
+#if 0
+// Flush has no effect at the moment, so nothing to test.
 TEST(OutStream, Flush)
 {
 	OutStream out;
@@ -43,4 +39,5 @@ TEST(OutStream, Flush)
 	out << "A B C " << 4 << ' ' << 5;
 	out.flush();
 }
+#endif
 

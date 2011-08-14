@@ -19,12 +19,6 @@ bool LinearLesson::exercise_is_valid()
 	return current_exercise_ != exercise_list_.end();
 }
 
-std::string LinearLesson::get_exercise_input() 
-{
-	assert(exercise_is_valid());
-	return current_exercise_->get_input();
-}
-
 Exercise& LinearLesson::get_exercise()
 {
 	return *current_exercise_;

@@ -3,6 +3,7 @@
 
 #include "study/lesson.hpp"
 #include <boost/ptr_container/ptr_list.hpp>
+#include <vector>
 
 namespace study
 {
@@ -27,9 +28,6 @@ class LinearLesson :
 	//!
 	//! Intended to check whether we are at the last exercise or not.
 	virtual bool exercise_is_valid();
-
-	//! \brief Get the input of the current exercise.
-	virtual std::string get_exercise_input();
 
   protected:
 	//! \brief Return a reference to the current exercise.

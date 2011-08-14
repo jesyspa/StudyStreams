@@ -1,6 +1,7 @@
 #ifndef INCLUDE_STUDY_LESSON_HPP
 #define INCLUDE_STUDY_LESSON_HPP
 
+#include <vector>
 #include <boost/utility.hpp>
 #include "study/exercise.hpp"
 
@@ -41,8 +42,12 @@ class Lesson :
 
 	//! \brief Called at the end of every exercise.
 	//!
+	//! \note retval is ignored by default, as most lessons are not expected to use
+	//!       it.
+	//!
+	//! \param[in] retval is the return value of the user's program.
 	//! \param[in] answer is the answer the user gave.
-	virtual void end_exercise(std::string const& answer);
+	virtual void end_exercise(int retval, std::string const& answer);
 
 	//! \brief Move on to the next exercise.
 	virtual void next_exercise() = 0;
@@ -59,7 +64,20 @@ class Lesson :
 	virtual bool exercise_is_valid() = 0;
 
 	//! \brief Get the input of the current exercise.
-	virtual std::string get_exercise_input() = 0;
+	virtual std::string get_exercise_input();
+
+	//! \brief Return the arguments that are to be passed to the exercise.
+	//!
+	//! Note the copy.  While this could be a performance issue, it should be
+	//! okay, seeing as only the char* get copied, not the strings themselves.
+	//! Also, this allows the vectors to be generated directly in this
+	//! function.
+	//!
+	//! Should contain at least a `dummy' first element.
+	virtual std::vector<char*> get_exercise_args();
+
+	//! \brief Function to be written by student.
+	virtual int solution(int argc, char* argv[]) = 0;
 
   protected:
 	//! \brief Return a reference to the current exercise.
@@ -77,7 +95,6 @@ class Lesson :
   private:
 	LessonInterface* interface_;
 };
-
 
 } // namespace study
 

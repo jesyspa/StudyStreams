@@ -1,10 +1,10 @@
 #include <study.hpp>
+#include "lesson.hpp"
 
-int main()
+int MAIN(int argc, char* argv[])
 {
-	study::cout << "Hello world!" << study::endl;
 	// "Hello world!" turns into a char const* automatically.
-	// Now, say hello to the universe.
 	study::cout << replace_with_a_<char const*>() << study::endl;
+	return 0;
 }
 

@@ -17,7 +17,7 @@ class LessonMock :
 		log().set_prefix("[ ");
 	}
 	void welcome() {}
-	void end_exercise(std::string const& answer)
+	void end_exercise(int /*retval*/, std::string const& answer)
 	{
 		Exercise& e = get_exercise();
 		e.submit(answer);
@@ -36,7 +36,7 @@ class LessonMock :
 	void expect(std::string const& s)
 	{
 		// Magically adds some details, then takes the address of the last returned.
-		add_exercise(&(new Exercise())->set_name("1").set_answer(s));
+		add_exercise(&(new Exercise("Expected"))->set_answer(s));
 	}
 };
 

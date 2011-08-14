@@ -1,0 +1,15 @@
+At some point, the question came up of how solutions should look like.  The
+aim was to keep them similar to standard C++ programs, but some kind of
+compromise had to be made.  The C++ files numbered one through five show the
+solutions that were considered.  Eventually, #4 was chosen.
+
+Primary reasons:
+- Ability to pass command line parameters
+- No need for the clunky study::endl business
+- Clear separation of exercises
+- Complete control of initialisation
+
+Problems with this approach:
+- Uses a macro (can be avoided per-lesson if desired)
+- Requires build system to work properly
+- Requires that the header for the lesson be provided (can be worked around).

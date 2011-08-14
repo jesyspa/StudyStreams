@@ -1,5 +1,5 @@
-#ifndef INCLUDE_STUDY_EXERCISE_HPP
-#define INCLUDE_STUDY_EXERCISE_HPP
+#ifndef INCLUDE_STUDY_ABSTRACTEXERCISE_HPP
+#define INCLUDE_STUDY_ABSTRACTEXERCISE_HPP
 
 #include <string>
 #include <vector>
@@ -8,8 +8,8 @@
 namespace study
 {
 
-//! \brief Represents an exercise in a lesson.
-class Exercise
+//! \brief Abstract base class for exercises.
+class AbstractExercise
 {
   public:
 	//! \brief Prototype for comparison function.
@@ -23,65 +23,54 @@ class Exercise
 		error = 1 << 3, //!< Set when there has been an internal error.
 		noinput = 1 << 4 //!< Set until input is provided.
 	};
-	//! \brief Gives the state of the Exercise
+	//! \brief Gives the state of the AbstractExercise
 
 	//! \brief Create an exercise.
-	Exercise(
+	AbstractExercise(
 		std::string const& name,
 		compare_func compare = simple_compare
 	);
   public:
-	virtual ~Exercise() {}
+	virtual ~AbstractExercise() {}
 
 	//! \brief Set the name of the exercise.
-	//!
-	//! The name is used as the first argeter to the exercise (executable name).
-	//!
-	//! \warning Calling this function in Lesson::get_exercise_args after
-	//! get_args() is called is NOT safe.
-	virtual Exercise& set_name(std::string const& name);
+	virtual AbstractExercise& set_name(std::string const& name) = 0;
 	//! \brief Set the answer to the exercise.
-	virtual Exercise& set_answer(std::string const& answer);
+	virtual AbstractExercise& set_answer(std::string const& answer) = 0;
 	//! \brief Set the input passed by the exercise.
-	virtual Exercise& set_input(std::string const& input);
+	virtual AbstractExercise& set_input(std::string const& input) = 0;
 	//! \brief Set the compare func to use with the exercise.
-	virtual Exercise& set_compare(compare_func compare);
+	virtual AbstractExercise& set_compare(compare_func compare) = 0;
 	//! \brief Add another argument.
-	//!
-	//! \warning Calling this function in Lesson::get_exercise_args after
-	//! get_args() is called is NOT safe.
-	virtual Exercise& add_arg(std::string const& arg);
+	virtual AbstractExercise& add_arg(std::string const& arg) = 0;
 	//! \brief Dummy function, used to make code more readable.
-	virtual Exercise& and_() { return *this; }
+	AbstractExercise& and_() { return *this; }
 
 	//! \brief Get the name of the exercise.
-	virtual std::string const& get_name() const;
+	virtual std::string const& get_name() const = 0;
 	//! \brief Get the answer to the exercise.
-	virtual std::string get_answer() const;
+	virtual std::string get_answer() = 0;
 	//! \brief Get the input passed by the exercise.
-	virtual std::string get_input() const;
+	virtual std::string get_input() = 0;
 	//! \brief Set the compare func to use with the exercise.
 	virtual compare_func get_compare();
 	//! \brief Return all arguments of the exercise.
-	//!
-	//! It is advised to call this at the last moment, as modifying any of the
-	//! arguments after this has been called invokes undefined behaviour.
-	virtual std::vector<char*> get_args();
+	virtual std::vector<char*> get_args() = 0;
 	//! \brief Get the actual answer recieved.
-	virtual std::string const& get_user_answer() const;
+	virtual std::string const& get_user_answer() = 0;
 	
 	//! \brief Reset the exercise, removing the answer given.
 	//!
-	//! Does not clear error flags.
-	Exercise& reset();
+	//! Should not clear error flags.
+	AbstractExercise& reset() = 0;
 
 	//! \brief Append a string to the input.
 	//!
 	//! Whitespace is inserted between the old and new input.
-	virtual Exercise& append_input(std::string const& input);
+	virtual AbstractExercise& append_input(std::string const& input) = 0;
 	
 	//! \brief Submit the answer.
-	virtual Exercise& submit(std::string const& user_answer);
+	virtual AbstractExercise& submit(std::string const& user_answer) = 0;
 
 	//! \brief Check whether the result has a certain flag set.
 	//!
@@ -89,37 +78,32 @@ class Exercise
 	//! too, use result_is_exactly if you don't want this.
 	//!
 	//! \arg[in] st is the state to be checked for.
-	bool result_is(Exercise::State st) const;
+	bool result_is(AbstractExercise::State st) const;
 
 	//! \brief Check whether the result has any of the ORed flags set.
 	//!
 	//! Assuming ORed flags, check whether at least one is set.
 	//!
 	//! \arg[in] st is the state to be checked for.
-	bool result_is_some_of(Exercise::State st) const;
+	bool result_is_some_of(AbstractExercise::State st) const;
 
 	//! \brief Check whether the result has exactly some flags set.
 	//!
 	//! Assuming ORed flags, check whether only these flags are set.
-	bool result_is_exactly(Exercise::State st) const;
+	bool result_is_exactly(AbstractExercise::State st) const;
 
   protected:
 	//! \brief Mark all bits in st as set.
-	void set_result(Exercise::State st);
+	void set_result(AbstractExercise::State st);
 	
 	//! \brief Mark all bits in st as unset.
-	void unset_result(Exercise::State st);
+	void unset_result(AbstractExercise::State st);
 
   private:
 	State state_;
-	std::string name_;
-	std::string answer_;
-	std::string input_;
-	std::vector<std::string> args_;
-	compare_func compare_;
-	std::string user_answer_;
 };
 
 } // namespace study
 
-#endif // INCLUDE_STUDY_EXERCISE_HPP
+#endif // INCLUDE_STUDY_ABSTRACTEXERCISE_HPP
+

@@ -24,6 +24,10 @@ unsigned int fact(unsigned int i)
 
 } // namespace
 
+// Used in order to make it look more like a typical lesson.
+#define MAIN FactorialTest::solution
+
+
 class FactorialTest :
 	public LessonMock
 {
@@ -42,7 +46,7 @@ class FactorialTest :
 		for (unsigned int i = 0; i < 4; ++i) {
 			int j = roll();
 			std::cout << j << ' ';
-			add_exercise(&(new Exercise)->
+			add_exercise(&(new Exercise(boost::lexical_cast<std::string>(j)))->
 				set_input(boost::lexical_cast<std::string>(j)).
 				set_answer(boost::lexical_cast<std::string>(fact(j))).
 				set_compare(float_compare)
@@ -50,7 +54,17 @@ class FactorialTest :
 		}
 		std::cout << std::endl;
 	}
+
+	int solution(int argc, char* argv[]);
 };
+
+int MAIN(int /*argc*/, char* /*argv*/[])
+{
+	int i;
+	EXPECT_TRUE(in() >> i);
+	out() << fact(i) << endl;
+	return 0;
+}
 
 TEST(FactorialTest, Check)
 {
@@ -60,11 +74,7 @@ TEST(FactorialTest, Check)
 	OutStream out;
 	{
 		LessonInterface lesson(new FactorialTest, in, log, out);
-		while (lesson) {
-			int i;
-			EXPECT_TRUE(in >> i);
-			out << fact(i) << endl;
-		}
+		lesson.run();
 	}
 	EXPECT_EQ("SSSS\n", ss.str());
 }

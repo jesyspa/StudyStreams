@@ -34,7 +34,9 @@ bool simple_compare(
 	std::string const& actual
 );
 
-//! \brief Literal comparison.
+//! \brief Whitespace- and case-insensitive compare.
+//!
+//! \warning Not tested.
 //!
 //! \param[in] answer is the answer expected.
 //! \param[in] actual is the answer given.
@@ -46,7 +48,7 @@ bool loose_compare(
 
 //! \brief Comparison that ignores whitespace.
 //!
-//! \warning Not implemented.
+//! \warning Not tested.
 //!
 //! \param[in] answer is the answer expected.
 //! \param[in] actual is the answer given.
@@ -61,6 +63,8 @@ bool whitespace_ignore_compare(
 //! As always with float comparisons, things may not work as expected, and
 //! there has been no testing with generated values.  Please report any unexpected
 //! results!
+//!
+//! \warning Not tested.
 //! 
 //! \param[in] answer is the answer expected.
 //! \param[in] actual is the answer given.
@@ -73,3 +77,4 @@ bool float_compare(
 } // namespace study
 
 #endif // INCLUDE_STUDY_STRINGUTILS_HPP
+

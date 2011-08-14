@@ -5,15 +5,15 @@
 
 using namespace study;
 
-TEST(Exercise, MinimumConstructor)
+TEST(Exercise, Constructor)
 {
-	Exercise e;
+	Exercise e("Test.");
 }
 
 TEST(Exercise, Result)
 {
-	Exercise e;
-	e.set_name("Unnamed").set_answer("ABCD");
+	Exercise e("Unnamed");
+	e.set_answer("ABCD");
 	EXPECT_TRUE(e.result_is(Exercise::State::noinput))
 		<< "Exercise marked as having been tried.";
 	e.submit("ABCD");
@@ -29,4 +29,15 @@ TEST(Exercise, Result)
 		<< "Exercise marked as not having been tried.";
 	EXPECT_TRUE(e.result_is(Exercise::State::fail | Exercise::State::complete))
 		<< "Exercise not marked as failed and/or complete.";
+}
+
+TEST(Exercise, Args)
+{
+	Exercise e("ArgTest");
+	e.add_arg("Arg1").add_arg("Arg2").add_arg("Arg3");
+	auto args = e.get_args();
+	EXPECT_STREQ(args[0], "ArgTest");
+	EXPECT_STREQ(args[1], "Arg1");
+	EXPECT_STREQ(args[2], "Arg2");
+	EXPECT_STREQ(args[3], "Arg3");
 }

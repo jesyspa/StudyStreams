@@ -6,6 +6,9 @@
 
 using namespace study;
 
+// Used in order to make it look more like a typical lesson.
+#define MAIN StagesTest::solution
+
 class StagesTest :
 	public LessonMock
 {
@@ -17,17 +20,24 @@ class StagesTest :
 		log().set_prefix("");
 		log() << "C";
 		for (unsigned int i = 0; i < i_; ++i)
-			add_exercise(new Exercise);
+			add_exercise(new Exercise("StageExercise"));
 	}
 	void welcome() { log() << "W"; }
 	void start_exercise() { log() << "S"; }
-	void end_exercise(std::string const&) { log() << "E"; }
+	void end_exercise(int /*retval*/, std::string const&) { log() << "E"; }
 	void part() { log() << "P"; }
 	void destruct() { log() << "D" << study::endl; }
+
+	int solution(int argc, char* argv[]);
 
   private:
 	unsigned int i_;
 };
+
+int MAIN(int /*argc*/, char* /*argv*/[])
+{
+	return 0;
+}
 
 TEST(StagesTest, Zero)
 {
@@ -37,8 +47,7 @@ TEST(StagesTest, Zero)
 	OutStream out;
 	{
 		LessonInterface l(new StagesTest(0), in, log, out);
-		while(l)
-			out.flush();
+		l.run();
 	}
 	EXPECT_EQ("CWPD\n", ss.str());
 }
@@ -51,8 +60,7 @@ TEST(StagesTest, One)
 	OutStream out;
 	{
 		LessonInterface l(new StagesTest(1), in, log, out);
-		while(l)
-			out.flush();
+		l.run();
 	}
 	EXPECT_EQ("CWSEPD\n", ss.str());
 }
@@ -65,8 +73,7 @@ TEST(StagesTest, Three)
 	OutStream out;
 	{
 		LessonInterface l(new StagesTest(3), in, log, out);
-		while(l)
-			out.flush();
+		l.run();
 	}
 	EXPECT_EQ("CWSESESEPD\n", ss.str());
 }
