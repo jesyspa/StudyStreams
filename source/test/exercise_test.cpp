@@ -10,27 +10,6 @@ TEST(Exercise, Constructor)
 	Exercise e("Test.");
 }
 
-TEST(Exercise, Result)
-{
-	Exercise e("Unnamed");
-	e.set_answer("ABCD");
-	EXPECT_TRUE(e.result_is(Exercise::State::noinput))
-		<< "Exercise marked as having been tried.";
-	e.submit("ABCD");
-	EXPECT_FALSE(e.result_is(Exercise::State::noinput))
-		<< "Exercise marked as not having been tried.";
-	EXPECT_TRUE(e.result_is(Exercise::State::success | Exercise::State::complete))
-		<< "Exercise not marked as successful and/or complete.";
-	e.reset();
-	EXPECT_TRUE(e.result_is(Exercise::State::noinput))
-		<< "Exercise marked as having been tried.";
-	e.submit("DCBA");
-	EXPECT_FALSE(e.result_is(Exercise::State::noinput))
-		<< "Exercise marked as not having been tried.";
-	EXPECT_TRUE(e.result_is(Exercise::State::fail | Exercise::State::complete))
-		<< "Exercise not marked as failed and/or complete.";
-}
-
 TEST(Exercise, Args)
 {
 	Exercise e("ArgTest");

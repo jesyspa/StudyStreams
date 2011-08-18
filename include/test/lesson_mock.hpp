@@ -19,11 +19,10 @@ class LessonMock :
 	void welcome() {}
 	void end_exercise(int /*retval*/, std::string const& answer)
 	{
-		Exercise& e = get_exercise();
-		e.submit(answer);
-		if (e.result_is(Exercise::State::success)) {
+		auto& e = get_exercise();
+		if (e.get_compare()(answer, e.get_answer())) {
 			log() << "S";
-		} else { // Assuming exercises always succeed or fail.
+		} else { 
 			log() << "F";
 		}
 	}

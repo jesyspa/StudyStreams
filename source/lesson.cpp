@@ -44,16 +44,15 @@ void Lesson::start_exercise()
 void Lesson::end_exercise(int /*retval*/, std::string const& answer)
 {
 	assert(this);
-	Exercise& e = get_exercise();
-	e.submit(answer);
-	if (e.result_is(Exercise::State::success)) {
+	auto& e = get_exercise();
+	if (e.get_compare()(answer, e.get_answer())) {
 		log() << "Exercise " << e.get_name() << ": passed." << study::endl;
 	} else { // Assuming exercises always succeed or fail.
 		log() << "Exercise " << e.get_name() << ": failed." << study::endl;
 		std::string old_prefix = log().get_prefix();
 		log().set_prefix(old_prefix + "==| ");
 		log() << "Expected \"" << e.get_answer() << "\"\n"
-		      << "Received \"" << e.get_user_answer() << "\"" << study::endl;
+		      << "Received \"" << answer << "\"" << study::endl;
 		log().set_prefix(old_prefix);
 	}
 	log() << study::endl;

@@ -19,7 +19,7 @@ bool LinearLesson::exercise_is_valid()
 	return current_exercise_ != exercise_list_.end();
 }
 
-Exercise& LinearLesson::get_exercise()
+AbstractExercise& LinearLesson::get_exercise()
 {
 	return *current_exercise_;
 }
@@ -29,7 +29,7 @@ void LinearLesson::jump_to_first()
 	current_exercise_ = exercise_list_.begin();
 }
 
-void LinearLesson::add_exercise(Exercise* e)
+void LinearLesson::add_exercise(AbstractExercise* e)
 {
 	exercise_list_.push_back(e);
 }

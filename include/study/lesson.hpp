@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <boost/utility.hpp>
-#include "study/exercise.hpp"
+#include "study/abstractexercise.hpp"
 
 namespace study
 {
@@ -81,7 +81,7 @@ class Lesson :
 
   protected:
 	//! \brief Return a reference to the current exercise.
-	virtual Exercise& get_exercise() = 0;
+	virtual AbstractExercise& get_exercise() = 0;
 
 	//! \brief Return the InStream the lesson is connected to.
 	InStream& in();

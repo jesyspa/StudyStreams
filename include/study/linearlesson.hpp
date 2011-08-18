@@ -31,16 +31,16 @@ class LinearLesson :
 
   protected:
 	//! \brief Return a reference to the current exercise.
-	virtual Exercise& get_exercise();
+	virtual AbstractExercise& get_exercise();
 
 	//! \brief Add an exercise to the list that have to be done.
 	//!
 	//! Exercises will be done in the order added.
-	void add_exercise(Exercise* e);
+	void add_exercise(AbstractExercise* e);
 
   private:
-	boost::ptr_list<Exercise> exercise_list_;
-	boost::ptr_list<Exercise>::iterator current_exercise_;
+	boost::ptr_list<AbstractExercise> exercise_list_;
+	boost::ptr_list<AbstractExercise>::iterator current_exercise_;
 };
 
 

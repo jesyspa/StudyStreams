@@ -7,7 +7,7 @@ Help("""
 
 flags = {
 	'cpp': ["-Wall", "-Wextra", "-std=c++0x"],
-	'debug': ["-O0", "-ggdb"],
+	'debug': ["-O0", "-ggdb", "-D_GLIBCXX_DEBUG"],
 	'release': ["-O2", "-DNDEBUG"],
 	'frame': "-I#include/",
 	'test': ["-I#include/", "-lgtest", "-lpthread", "-L#lib/", "-ldbgstudy"],
