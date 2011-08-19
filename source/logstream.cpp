@@ -9,7 +9,7 @@ namespace study
 {
 
 LogStream::LogStream() :
-	os_(nullptr),
+	os_(0),
 	screen_width_(80),
 	prefix_("| "),
 	format_(&string_format)
@@ -38,7 +38,7 @@ LogStream& LogStream::connect_to_ostream(std::ostream& os)
 LogStream& LogStream::disconnect_from_ostream()
 {
 	assert(this);
-	os_ = nullptr;
+	os_ = 0;
 	return *this;
 }
 
