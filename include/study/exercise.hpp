@@ -26,8 +26,6 @@ class Exercise :
 		compare_func compare = simple_compare
 	);
 
-	virtual ~Exercise() {}
-
 	//! \brief Set the name of the exercise.
 	//!
 	//! The name is used as the first argeter to the exercise (executable name).

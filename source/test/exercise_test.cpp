@@ -1,7 +1,5 @@
 #include "study/exercise.hpp"
 #include <gtest/gtest.h>
-#include "study/stringutils.hpp"
-#include "study/enumutils.hpp"
 
 using namespace study;
 

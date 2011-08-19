@@ -4,7 +4,7 @@
 *.a
 doc/
 .scons*
-runtests
+*runtests
 *.toc
 *.aux
 *.pdf

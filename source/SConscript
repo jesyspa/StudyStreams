@@ -1,11 +1,16 @@
 Import('env')
-Import('tests')
-Import('target')
+Import('prefix')
 
 frame_sources = Glob("*.cpp")
 
+target = "".join(['#lib/', prefix, 'study'])
+
 env.StaticLibrary(target, frame_sources)
 
-if tests:
-	SConscript('test/SConscript')
+exports = {
+	'env': env,
+	'prefix': prefix,
+}
+
+SConscript('test/SConscript', exports=exports)
 

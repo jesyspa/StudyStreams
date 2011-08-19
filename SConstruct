@@ -10,7 +10,7 @@ flags = {
 	'debug': ["-O0", "-ggdb", "-D_GLIBCXX_DEBUG"],
 	'release': ["-O2", "-DNDEBUG"],
 	'frame': "-I#include/",
-	'test': ["-I#include/", "-lgtest", "-lpthread", "-L#lib/", "-ldbgstudy"],
+	'test': ["-I#include/", "-lgtest", "-lpthread", "-L#lib/"],
 }
 
 Export('flags')
@@ -33,14 +33,12 @@ Export('base_env')
 
 dbg_exports = {
 	'env': dbg_frame_env,
-	'tests': True,
-	'target': '#lib/dbgstudy',
+	'prefix': 'dbg',
 }
 
 rel_exports = {
 	'env': rel_frame_env,
-	'tests': False,
-	'target': '#lib/study',
+	'prefix': '',
 } 
 
 SConscript("source/SConscript", exports=dbg_exports, variant_dir='.dbgbuild')

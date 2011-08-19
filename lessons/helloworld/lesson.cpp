@@ -8,9 +8,8 @@ using namespace study;
 void HelloWorldLesson::construct()
 {
 	log().set_prefix("--| ");
-	add_exercise(&(new Exercise)->
-		set_name("Welcoming Lesson").
-		set_answer("Hello world!")
+	add_exercise(&(new Exercise("Welcoming Lesson"))->
+		set_answer("Hello world!").
 		set_compare(loose_compare));
 }
 
