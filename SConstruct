@@ -21,12 +21,30 @@ Export('flags')
 
 base_env = Environment(CXX="g++", CPPFLAGS=flags['cpp'])
 
+dbg_frame_env = base_env.Clone()
+dbg_frame_env.MergeFlags([flags['debug'], flags['frame']])
+
+rel_frame_env = base_env.Clone()
+rel_frame_env.MergeFlags([flags['release'], flags['frame']])
+
 Export('base_env')
 
 #### END ENVIRONMENTS ###
 
-SConscript("source/SConscriptDebug", variant_dir='.dbgbuild')
-SConscript("source/SConscriptRelease", variant_dir='.relbuild')
+dbg_exports = {
+	'env': dbg_frame_env,
+	'tests': True,
+	'target': '#lib/dbgstudy',
+}
+
+rel_exports = {
+	'env': rel_frame_env,
+	'tests': False,
+	'target': '#lib/study',
+} 
+
+SConscript("source/SConscript", exports=dbg_exports, variant_dir='.dbgbuild')
+SConscript("source/SConscript", exports=rel_exports, variant_dir='.relbuild')
 
 Default('runtests')
 

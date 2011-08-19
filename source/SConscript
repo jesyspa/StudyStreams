@@ -1,0 +1,11 @@
+Import('env')
+Import('tests')
+Import('target')
+
+frame_sources = Glob("*.cpp")
+
+env.StaticLibrary(target, frame_sources)
+
+if tests:
+	SConscript('test/SConscript')
+
