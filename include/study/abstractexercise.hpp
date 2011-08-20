@@ -1,9 +1,10 @@
 #ifndef INCLUDE_STUDY_ABSTRACTEXERCISE_HPP
 #define INCLUDE_STUDY_ABSTRACTEXERCISE_HPP
 
+#include "study/stringutils.hpp"
 #include <string>
 #include <vector>
-#include "study/stringutils.hpp"
+#include <functional>
 
 namespace study
 {
@@ -13,7 +14,12 @@ class AbstractExercise
 {
   public:
 	//! \brief Prototype for comparison function.
-	typedef bool (*compare_func)(std::string const&, std::string const&);
+	typedef std::function<
+		bool (
+			std::string const&,
+			std::string const&
+		)
+	> compare_func;
 
 	virtual ~AbstractExercise() {}
 
