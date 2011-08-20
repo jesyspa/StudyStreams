@@ -1,9 +1,10 @@
 #ifndef INCLUDE_STUDY_IO_HPP
 #define INCLUDE_STUDY_IO_HPP
 
-#include "outstream.hpp"
-#include "instream.hpp"
-#include "logstream.hpp"
+#include "study/outstream.hpp"
+#include "study/instream.hpp"
+#include "study/logstream.hpp"
+#include "study/endline.hpp"
 
 namespace study
 {

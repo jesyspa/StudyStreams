@@ -15,8 +15,13 @@ class Lesson;
 
 //! \brief  Represents a lesson.
 //!
-//! Each program written by a student should have a LessonInterface object that feeds
-//! data through study::cin and monitors the output through study::cout.  
+//! Each program written by a teacher should have a LessonInterface object that feeds
+//! the solution data through an InStream and monitors the output through an
+//! OutStream.
+//!
+//! In order to use LessonInterface, simply new an instance of your Lesson subclass,
+//! and pass the pointer to the constructor. Note that the LessonInterface will take
+//! ownership of this pointer, and delete it when it is done.
 class LessonInterface :
 	boost::noncopyable
 {
@@ -48,15 +53,15 @@ class LessonInterface :
 	//! If no stream is associated, the behaviour is undefined.
 	InStream& in();
 
-	//! \brief Return the OutStream associated with the lesson.
-	//!
-	//! If no stream is associated, the behaviour is undefined.
-	OutStream& out();
-
 	//! \brief Return the instream associated with the lesson.
 	//!
 	//! If no stream is associated, the behaviour is undefined.
 	LogStream& log();
+
+	//! \brief Return the OutStream associated with the lesson.
+	//!
+	//! If no stream is associated, the behaviour is undefined.
+	OutStream& out();
 
   private:
 	boost::scoped_ptr<Lesson> lesson_;

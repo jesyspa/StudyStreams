@@ -1,5 +1,4 @@
 #include "study/lessoninterface.hpp"
-#include <iostream>
 #include "study/lesson.hpp"
 #include "study/enumutils.hpp"
 
@@ -20,23 +19,11 @@ LessonInterface::LessonInterface(
 	assert(lesson_);
 	out_->claim();
 	lesson_->set_interface(*this);
-	lesson_->construct();
 }
 
 LessonInterface::~LessonInterface()
 {
-	assert(lesson_);
-	try
-	{
-		lesson_->destruct();
-		out().release();
-	}
-	catch (...)
-	{
-		std::cerr << "Exception thrown in LessonInterface::~LessonInterface.  "
-			<< "Please report this.\n";
-		assert(0);
-	}
+	out().release();
 }
 
 void LessonInterface::run()

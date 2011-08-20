@@ -44,5 +44,5 @@ rel_exports = {
 SConscript("source/SConscript", exports=dbg_exports, variant_dir='.dbgbuild')
 SConscript("source/SConscript", exports=rel_exports, variant_dir='.relbuild')
 
-Default('runtests')
+Default('dbgruntests')
 

@@ -32,9 +32,8 @@ class FactorialTest :
 	public LessonMock
 {
   public:
-	void construct()
+	FactorialTest()
 	{
-		log().set_prefix("");
 		boost::mt19937 gen;
 		gen.seed(std::time(0));
 		boost::uniform_int<> dist(0,8);

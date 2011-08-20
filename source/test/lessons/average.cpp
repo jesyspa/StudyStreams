@@ -18,9 +18,8 @@ class AverageTest :
 	public LessonMock
 {
   public:
-	void construct()
+	AverageTest()
 	{
-		log().set_prefix("");
 		boost::mt19937 gen;
 		gen.seed(std::time(0));
 		boost::uniform_int<> dist(1,16);

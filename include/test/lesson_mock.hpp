@@ -3,6 +3,7 @@
 
 #include "study/linearlesson.hpp"
 #include "study/exercise.hpp"
+#include "study/io.hpp"
 
 namespace study
 {
@@ -12,11 +13,6 @@ class LessonMock :
 	public LinearLesson
 {
   public:
-	void construct()
-	{
-		log().set_prefix("[ ");
-	}
-	void welcome() {}
 	void end_exercise(int /*retval*/, std::string const& answer)
 	{
 		auto& e = get_exercise();

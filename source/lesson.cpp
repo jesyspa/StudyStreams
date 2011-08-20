@@ -34,20 +34,20 @@ OutStream& Lesson::out()
 
 void Lesson::welcome()
 {
-	log() << "------ Start Lesson ------\n" << study::endl;
 }
 
 void Lesson::start_exercise()
 {
 }
 
-void Lesson::end_exercise(int /*retval*/, std::string const& answer)
+void Lesson::end_exercise(int retval, std::string const& answer)
 {
 	assert(this);
 	auto& e = get_exercise();
-	if (e.get_compare()(answer, e.get_answer())) {
+	// Ensure that the answer and return value are as-expected.
+	if ((e.get_compare()(answer, e.get_answer())) && (retval == e.get_ret_code())) {
 		log() << "Exercise " << e.get_name() << ": passed." << study::endl;
-	} else { // Assuming exercises always succeed or fail.
+	} else { 
 		log() << "Exercise " << e.get_name() << ": failed." << study::endl;
 		std::string old_prefix = log().get_prefix();
 		log().set_prefix(old_prefix + "==| ");
@@ -60,13 +60,6 @@ void Lesson::end_exercise(int /*retval*/, std::string const& answer)
 
 void Lesson::part()
 {
-	assert(this);
-	log() << "\n------  End Lesson ------" << study::endl;
-}
-
-void Lesson::destruct()
-{
-	assert(this);
 }
 
 std::string Lesson::get_exercise_input() 

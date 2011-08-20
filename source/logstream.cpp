@@ -11,7 +11,6 @@ namespace study
 LogStream::LogStream() :
 	os_(0),
 	screen_width_(80),
-	prefix_("| "),
 	format_(&string_format)
 {
 }
@@ -19,7 +18,6 @@ LogStream::LogStream() :
 LogStream::LogStream(std::ostream& os) :
 	os_(&os),
 	screen_width_(80),
-	prefix_("| "),
 	format_(&string_format)
 {
 }
