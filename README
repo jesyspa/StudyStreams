@@ -12,3 +12,6 @@ To build with debug information, run:
 After that, build lesson.cpp and main.cpp files in a lesson and link them
 together with lib/libdbgstudy.a .
 
+Makes use of:
+- Scons build system
+	http://www.scons.org/

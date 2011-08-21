@@ -93,12 +93,14 @@ inline bool state_has_only(T state, T flags)
 	return (state & ~flags) != T::empty;
 }
 
+//! \brief Return a T with all bits set that are set in flags or in state.
 template<typename T>
 inline T set(T state, T flags)
 {
 	return state | flags;
 }
 
+//! \brief Return a T with all bits set that are set in state but not flags.
 template<typename T>
 inline T unset(T state, T flags)
 {

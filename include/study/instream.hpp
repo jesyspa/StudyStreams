@@ -17,10 +17,6 @@ class InStream :
 	boost::noncopyable
 {
   public:
-	InStream();
-	InStream(std::string const& input);
-	~InStream();
-
 	//! \brief Set the string that will be passed to the user.
 	//!
 	//! Do not use internally -- this is for the lesson to use.

@@ -43,6 +43,13 @@ rel_exports = {
 
 SConscript("source/SConscript", exports=dbg_exports, variant_dir='.dbgbuild')
 SConscript("source/SConscript", exports=rel_exports, variant_dir='.relbuild')
+Command('doc/.create', 'Doxyfile', 'doxygen')
 
-Default('dbgruntests')
+Alias('dbg', '#lib/dbgstudy')
+Alias('test', '#dbgruntests')
+Alias('release', '#lib/study')
+Alias('reltest', '#runtests')
+Alias('doc', 'doc/.create')
+
+Default('test')
 

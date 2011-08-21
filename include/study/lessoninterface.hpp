@@ -28,7 +28,7 @@ class LessonInterface :
   public:
 	//! \brief Initialise the LessonInterface.
 	//!
-	//! \param[in] loader is the loader to use.  The lesson takes ownership of it.
+	//! \param[in] lesson is the lesson to run.  This interface takes ownership of it.
 	//! \param[in,out] ins is the stream to be used for getting input from
 	//!                the lesson.
 	//! \param[in,out] logs is the stream to be used for displaying output from
