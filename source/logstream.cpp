@@ -10,15 +10,13 @@ namespace study
 
 LogStream::LogStream() :
 	os_(0),
-	screen_width_(80),
-	format_(&string_format)
+	format_(string_format())
 {
 }
 
 LogStream::LogStream(std::ostream& os) :
 	os_(&os),
-	screen_width_(80),
-	format_(&string_format)
+	format_(string_format())
 {
 }
 
@@ -46,30 +44,17 @@ bool LogStream::has_ostream() const
 	return os_;
 }
 
-LogStream& LogStream::set_screen_width(unsigned int width)
+LogStream& LogStream::set_format_func(string_format_func const& func)
 {
 	assert(this);
-	screen_width_ = width;
+	format_ = func;
 	return *this;
 }
 
-unsigned int LogStream::get_screen_width() const
+LogStream::string_format_func const& LogStream::get_format_func() const
 {
 	assert(this);
-	return screen_width_;
-}
-
-LogStream& LogStream::set_prefix(std::string const& prefix)
-{
-	assert(this);
-	prefix_ = prefix;
-	return *this;
-}
-
-std::string const& LogStream::get_prefix() const
-{
-	assert(this);
-	return prefix_;
+	return format_;
 }
 
 LogStream& LogStream::operator<<(EndLine const& /*value*/)
@@ -96,7 +81,8 @@ LogStream& LogStream::write(char const* s, size_t count)
 LogStream& LogStream::flush() {
 	assert(this);
 	assert(os_);
-	(*os_) << format_(oss_.str(), prefix_, screen_width_);
+	assert(format_);
+	(*os_) << format_(oss_.str());
 	oss_.str("");
 	return *this;
 }

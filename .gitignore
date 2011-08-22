@@ -9,4 +9,5 @@ doc/
 *.aux
 *.pdf
 spec*.log
+tags
 

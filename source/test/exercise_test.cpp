@@ -22,7 +22,7 @@ TEST(Exercise, Args)
 
 struct StringComparisonTestStruct
 {
-	bool operator()(std::string const& a, std::string const& b)
+	bool operator()(std::string const& a, std::string const& b) const
 	{
 		return a == b;
 	}

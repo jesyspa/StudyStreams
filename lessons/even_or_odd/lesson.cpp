@@ -19,7 +19,6 @@ struct EvenOrOddLesson :
 			boost::mt19937&,
 			boost::uniform_int<>
 		> roll(gen, dist);
-		Exercise* e;
 		for (size_t n = 0; n < 16; ++n) {
 			int j = roll();
 			auto name = boost::lexical_cast<std::string(n);

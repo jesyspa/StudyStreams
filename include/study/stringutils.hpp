@@ -12,11 +12,13 @@ namespace study
 //! \param[in] prefix is the prefix to prepend to each line.
 //! \param[in] max_width is the maximum length of a line.
 //! \return Returns a string that contains the inputted, formatted.
-std::string string_format(
-	std::string const& input,
-	std::string const& prefix,
-	unsigned int max_width
-);
+struct string_format
+{
+	string_format();
+	std::string operator()(std::string const& input) const;
+	std::string prefix;
+	unsigned int max_width;
+};
 
 //! \brief Replaces special characters with their escape codes.
 //!

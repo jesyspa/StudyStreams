@@ -1,11 +1,12 @@
 #ifndef INCLUDE_STUDY_LOGSTREAM_HPP
 #define INCLUDE_STUDY_LOGSTREAM_HPP
 
+#include "study/endline.hpp"
+#include <boost/utility.hpp>
+#include <functional>
 #include <ostream>
 #include <sstream>
 #include <string>
-#include <boost/utility.hpp>
-#include "study/endline.hpp"
 
 namespace study
 {
@@ -19,10 +20,11 @@ class LessonInterface;
 class LogStream :
 	boost::noncopyable
 {
-	typedef std::string (*string_format_func)(
-		std::string const&, // String to format
-		std::string const&, // Prefix
-		unsigned int); // Max line length
+	typedef std::function<
+		std::string (
+			std::string const& // String to format
+		)
+	> string_format_func;
   public:
 	//! \brief Create a logstream that is not connected to any ostream.
 	//!
@@ -51,29 +53,11 @@ class LogStream :
 	//! \brief Return true if connected to an ostream.
 	bool has_ostream() const;
 
-	//! \brief Set the screen width.
-	//!
-	//! 0 means endless width.  By default, this is 80.
-	//! 
-	//! \param[in] width is the new width
-	LogStream& set_screen_width(unsigned int width);
+	//! \brief Set the format function to be used.
+	LogStream& set_format_func(string_format_func const& func);
 
-	//! \brief Return the screen width.
-	//!
-	//! Intended for testing.
-	unsigned int get_screen_width() const;
-
-	//! \brief Set the log prefix.
-	//!
-	//! By default, this is "| ".
-	//!
-	//! \param[in] prefix is the prefix to use.
-	LogStream& set_prefix(std::string const& prefix);
-
-	//! \brief Return the log prefix.
-	//!
-	//! Intended for testing.
-	std::string const& get_prefix() const;
+	//! \brief Return the format function currently used.
+	string_format_func const& get_format_func() const;
 
 	// Standard formatted output
 	//! \brief Insert a value into the stream.
@@ -97,8 +81,6 @@ class LogStream :
   private:
 	std::ostream* os_;
 	std::ostringstream oss_;
-	unsigned int screen_width_;
-	std::string prefix_;
 	string_format_func format_;
 };
 

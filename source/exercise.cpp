@@ -77,7 +77,7 @@ std::vector<char*> Exercise::get_args() const
 	// but to cast it in an ugly way like this.
 	//
 	// The documentation should mention somewhere that modifying argv is idiotic
-	// and not acceptable.
+	// and not safe.
 	std::vector<char*> args_raw_;
 	args_raw_.push_back(const_cast<char*>(name_.c_str()));
 	BOOST_FOREACH(std::string s, args_)

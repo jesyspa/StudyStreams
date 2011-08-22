@@ -32,7 +32,8 @@ int MAIN(int /* argc */, char* /* argv */[])
 struct SolutionLesson :
 	LessonMock
 {
-	SolutionLesson()
+	SolutionLesson() :
+		solution_(0)
 	{
 		add_exercise(&(new Exercise("SolutionTest"))->
 			set_input("Hello").

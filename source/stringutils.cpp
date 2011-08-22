@@ -14,10 +14,12 @@
 namespace study
 {
 
-std::string string_format(
-	std::string const& input,
-	std::string const& prefix,
-	unsigned int max_width)
+string_format::string_format() :
+	prefix(""),
+	max_width(80)
+{}
+
+std::string string_format::operator()(std::string const& input) const
 {
 	boost::char_separator<char> sep("\n", "", boost::keep_empty_tokens);
 	boost::tokenizer<boost::char_separator<char>> tok(input, sep);

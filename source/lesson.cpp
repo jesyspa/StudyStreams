@@ -8,6 +8,10 @@
 namespace study
 {
 
+Lesson::Lesson() :
+	interface_(0)
+{}
+
 void Lesson::set_interface(LessonInterface& l)
 {
 	assert(this);
@@ -49,11 +53,8 @@ void Lesson::end_exercise(int retval, std::string const& answer)
 		log() << "Exercise " << e.get_name() << ": passed." << study::endl;
 	} else { 
 		log() << "Exercise " << e.get_name() << ": failed." << study::endl;
-		std::string old_prefix = log().get_prefix();
-		log().set_prefix(old_prefix + "==| ");
 		log() << "Expected \"" << e.get_answer() << "\"\n"
 		      << "Received \"" << answer << "\"" << study::endl;
-		log().set_prefix(old_prefix);
 	}
 	log() << study::endl;
 }

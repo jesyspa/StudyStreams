@@ -40,7 +40,7 @@ class Lesson :
 	//!
 	//! \warning The LessonInterface object will _NOT_ be available from here.
 	//!          Any input/output should be done in the welcome() function.
-	Lesson() {}
+	Lesson();
 
 	//! \brief Destructor.  Should not throw.
 	//!
