@@ -18,30 +18,12 @@ void Lesson::set_interface(LessonInterface& l)
 	interface_ = &l;
 }
 
-InStream& Lesson::in()
-{
-	assert(this);
-	return interface_->in();
-}
-
-LogStream& Lesson::log()
-{
-	assert(this);
-	return interface_->log();
-}
-
-OutStream& Lesson::out()
-{
-	assert(this);
-	return interface_->out();
-}
-
 void Lesson::welcome()
-{
+{	// No need to do anything
 }
 
 void Lesson::start_exercise()
-{
+{	// No need to do anything
 }
 
 void Lesson::end_exercise(int retval, std::string const& answer)
@@ -60,7 +42,11 @@ void Lesson::end_exercise(int retval, std::string const& answer)
 }
 
 void Lesson::part()
-{
+{	// No need to do anything
+}
+
+void Lesson::handle_exception(std::exception& /*e*/)
+{	// No need to do anything
 }
 
 std::string Lesson::get_exercise_input() 
@@ -73,6 +59,24 @@ std::vector<char*> Lesson::get_exercise_args()
 {
 	assert(exercise_is_valid());
 	return get_exercise().get_args();
+}
+
+InStream& Lesson::in()
+{
+	assert(this);
+	return interface_->in();
+}
+
+LogStream& Lesson::log()
+{
+	assert(this);
+	return interface_->log();
+}
+
+OutStream& Lesson::out()
+{
+	assert(this);
+	return interface_->out();
 }
 
 } // namespace study

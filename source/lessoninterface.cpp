@@ -1,6 +1,6 @@
 #include "study/lessoninterface.hpp"
 #include "study/lesson.hpp"
-#include "study/enumutils.hpp"
+#include <exception>
 
 namespace study
 {
@@ -42,7 +42,14 @@ void LessonInterface::run()
 		lesson_->start_exercise(); // Per-exercise greeting text
 		in().set_input(lesson_->get_exercise_input());
 		auto args = lesson_->get_exercise_args();
-		int ret = lesson_->solution(args.size(), args.data()); // Actual work
+		int ret = -1; // Declared before the try to have proper scope, stores the
+		              // solution return code.  Default value used if exception thrown.
+		try {
+			ret = lesson_->solution(args.size(), args.data()); // Actual work
+		}
+		catch (std::exception& e) {
+			lesson_->handle_exception(e);
+		}
 		lesson_->end_exercise(ret, out().retrieve()); // Per-exercise parting text
 		out().reset();
 		lesson_->next_exercise();

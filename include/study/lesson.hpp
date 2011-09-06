@@ -96,6 +96,14 @@ class Lesson :
 	//! is undesired, try to repair the error here, or throw.
 	virtual bool exercise_is_valid() = 0;
 
+	//! \brief Handle an exception thrown by the solution.
+	//!
+	//! This function is called whenever the solution throws an exception that
+	//! derives from std::exception.
+	//!
+	//! \param[in] e is the exception that was thrown
+	virtual void handle_exception(std::exception& e);
+
 	//! \brief Get the input of the current exercise.
 	std::string get_exercise_input();
 
